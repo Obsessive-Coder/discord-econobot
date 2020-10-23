@@ -18,7 +18,7 @@ const {
 
 module.exports = class ConfigHelper {
   static saveConfig(message, configField, value, successMessage) {
-    let parsedValue;
+    let parsedValue = value;
     let valuePrepend = '';
     if (configField !== CURRENCY_SYMBOL_FIELD) {
       const isNumber = FLOAT_REGEX.test(value);
