@@ -1,0 +1,16 @@
+{
+  "name": "ds_economy",
+  "version": "0.0.1",
+  "description": "A discord economy bot",
+  "main": "index.js",
+  "author": "Jared Huffstutler",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "discord.js": "^12.4.0",
+    "dotenv": "^8.2.0"
+  }
+}
