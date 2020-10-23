@@ -1,6 +1,6 @@
 {
   "currencySymbol": "$",
   "startAmount": "420",
-  "maxPocketAmount": null,
-  "maxBankAmount": null
+  "maxPocketAmount": "5700",
+  "maxBankAmount": "10000"
 }
