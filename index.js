@@ -30,14 +30,18 @@ client.on('message', message => {
   if (!content.startsWith(prefix) || message.author.bot) return;
 
   const args = content.slice(prefix.length).trim().split(/ +/);
-  const command = args.shift();
+  const commandName = args.shift().toLowerCase();
 
-  if (!client.commands.has(command)) return;
+  if (!client.commands.has(commandName)) return;
 
-  console.log(client)
+  const command = client.commands.get(commandName);
+
+  // if (command.args && !args.length) {
+  //   return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
+  // }
 
   try {
-    client.commands.get(command).execute(message, args);
+    command.execute(message, args);
     message.channel.messages.delete(message);
   } catch (error) {
     message.reply(COMMAND_ERROR_MESSAGE);
