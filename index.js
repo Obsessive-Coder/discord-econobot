@@ -1,19 +1,28 @@
 require('dotenv').config();
 const { Client } = require('discord.js');
-const config = require('./config');
+
+// Configuration.
+const {
+  appConfig: { prefix, token },
+} = require('./config');
+
+// Constants.
+const {
+  APP_CONSTANTS: {
+    READY_MESSAGE,
+    COMMAND_ERROR_MESSAGE,
+  },
+} = require('./constants');
 
 // Commands.
 const commands = require('./commands');
-
-// Configuration variables.
-const { prefix, token } = config;
 
 const client = new Client();
 
 client.commands = commands;
 
 client.once('ready', () => {
-  console.log('Economy bot is ready!');
+  console.log(READY_MESSAGE);
 });
 
 client.on('message', message => {
@@ -23,8 +32,12 @@ client.on('message', message => {
   const args = content.slice(prefix.length).trim().split(/ +/);
   const command = args.shift();
 
-  if (commands.has(command)) {
+  if (!client.commands.has(command)) return;
+
+  try {
     client.commands.get(command).execute(message, args);
+  } catch (error) {
+    message.reply(COMMAND_ERROR_MESSAGE);
   }
 });
 

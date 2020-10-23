@@ -1,0 +1,10 @@
+const CURRENCY_SYMBOL_MESSAGE = 'Currency symbol set to:';
+const START_AMOUNT_MESSAGE = 'Start amount set to:';
+
+module.exports.CURRENCY_SYMBOL_MESSAGE = CURRENCY_SYMBOL_MESSAGE;
+module.exports.START_AMOUNT_MESSAGE = START_AMOUNT_MESSAGE;
+
+module.exports = {
+  CURRENCY_SYMBOL_MESSAGE,
+  START_AMOUNT_MESSAGE,
+};

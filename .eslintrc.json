@@ -24,6 +24,9 @@
       "arrow-parens": ["error", "as-needed"],
       "linebreak-style": ["error", "windows"],
       "import/extensions": ["off"],
-      "no-plusplus": ["off"]
+      "no-plusplus": ["off"],
+      "global-require": ["off"],
+      "import/no-dynamic-require": ["off"]
+
   }
 }

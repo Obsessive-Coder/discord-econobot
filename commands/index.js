@@ -1,6 +1,3 @@
-/* eslint-disable import/no-dynamic-require */
-/* eslint-disable global-require */
-
 const { readdirSync } = require('fs');
 const { basename, join } = require('path');
 const { Collection } = require('discord.js');
