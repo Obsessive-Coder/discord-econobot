@@ -25,10 +25,6 @@ module.exports = class ConfigHelper {
         return message.reply(error.message);
       }
 
-      // console.log(message.author)
-
-      // `<${message.author.displayAvatarURL({ format: "png", dynamic: true })}>`
-
       const { author } = message;
       const { username } = author;
 

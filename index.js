@@ -34,8 +34,11 @@ client.on('message', message => {
 
   if (!client.commands.has(command)) return;
 
+  console.log(client)
+
   try {
     client.commands.get(command).execute(message, args);
+    message.channel.messages.delete(message);
   } catch (error) {
     message.reply(COMMAND_ERROR_MESSAGE);
   }
