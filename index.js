@@ -15,6 +15,7 @@ commands.set('fuuckYeah', fuuckYeah);
 client.on('message', message => {
   if (message.content[0] === '!') {
     const command = message.content.split(' ')[0].substr(1);
+
     if (commands.has(command)) {
       commands.get(command)(message);
     }
