@@ -1,28 +1,31 @@
-import 'dotenv/config.js';
-import { Client } from 'discord.js';
+require('dotenv').config();
+const { Client } = require('discord.js');
+const config = require('./config');
+
+// Commands.
+const commands = require('./commands');
+
+// Configuration variables.
+const { prefix, token } = config;
 
 const client = new Client();
 
-function fuuckYeah(message) {
-  const output = 'Fuuck Yeah Our Custom Bot Is Alive';
-  message.channel.send(output);
-}
-
-const commands = new Map();
-commands.set('fuuckYeah', fuuckYeah);
+client.commands = commands;
 
 client.once('ready', () => {
-  console.log('Ready!');
+  console.log('Economy bot is ready!');
 });
 
 client.on('message', message => {
-  if (message.content[0] === '!') {
-    const command = message.content.split(' ')[0].substr(1);
+  const { content } = message;
+  if (!content.startsWith(prefix) || message.author.bot) return;
 
-    if (commands.has(command)) {
-      commands.get(command)(message);
-    }
+  const args = content.slice(prefix.length).trim().split(/ +/);
+  const command = args.shift();
+
+  if (commands.has(command)) {
+    client.commands.get(command).execute(message, args);
   }
 });
 
-client.login(process.env.TOKEN);
+client.login(token);
