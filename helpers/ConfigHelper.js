@@ -31,7 +31,7 @@ module.exports = class ConfigHelper {
       valuePrepend = economyConfig.currencySymbol || currencySymbol;
     }
 
-    if (value) {
+    if (!value) {
       return message.reply(INVALID_ARGUMENT_ERROR_MESSAGE);
     }
 
