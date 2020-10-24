@@ -20,9 +20,6 @@ module.exports = {
     // console.log(amount);
 
     let response = 'bar';
-    if (args.length !== 2) {
-      response = INVALID_ARGUMENT_ERROR_MESSAGE;
-    }
 
     message.channel.send(response);
   },
