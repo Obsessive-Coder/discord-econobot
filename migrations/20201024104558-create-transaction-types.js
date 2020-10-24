@@ -15,7 +15,7 @@ module.exports = {
         unique: true,
       },
     }, {
-      modelName: 'TransactionTypes',
+      modelName: 'TransactionType',
       tableName: 'transaction_types',
       timestamps: false,
     });

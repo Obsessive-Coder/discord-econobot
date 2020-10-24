@@ -15,14 +15,26 @@ module.exports = {
         validate: {
           isUUID: 4,
         },
+        references: {
+          model: 'transaction_types',
+          key: 'id',
+        },
       },
       user_id: {
         type: Sequelize.STRING,
         allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
       },
       admin_user_id: {
         type: Sequelize.STRING,
         allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id',
+        },
       },
       amount: {
         type: Sequelize.INTEGER,
@@ -37,7 +49,7 @@ module.exports = {
         allowNull: false,
       },
     }, {
-      modelName: 'Transactions',
+      modelName: 'Transaction',
       tableName: 'transactions',
       underscored: true,
     });

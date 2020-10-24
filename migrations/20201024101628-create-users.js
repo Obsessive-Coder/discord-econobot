@@ -6,11 +6,6 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      username: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: false,
-      },
       wallet_balance: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -30,7 +25,7 @@ module.exports = {
         type: Sequelize.DATE,
       },
     }, {
-      modelName: 'Users',
+      modelName: 'User',
       tableName: 'users',
       underscored: true,
     });
