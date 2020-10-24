@@ -36,10 +36,6 @@ module.exports = class MainHelper {
     return client.users.cache.get(userId);
   }
 
-  static getCapitalizedString(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
   static handleCooldowns(message, cooldowns, name, cooldown) {
     if (!cooldowns.has(name)) {
       cooldowns.set(name, new Collection());

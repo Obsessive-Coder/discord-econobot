@@ -10,7 +10,7 @@ const {
 } = require('../constants');
 
 // Helpers.
-const { MainHelper, wallets } = require('../helpers');
+const { wallets, MainHelper, UtilityHelper } = require('../helpers');
 
 const { GET_BALANCE } = COMMAND_CONSTANTS;
 const { ACCOUNT_TYPES } = COLLECTION_CONSTANTS;
@@ -51,7 +51,8 @@ module.exports = {
     if (user) {
       const { id, username } = user;
       const balance = wallets.getBalance(id, accountType);
-      const capitalizedAccountType = MainHelper.getCapitalizedString(accountType);
+      const capitalizedAccountType = UtilityHelper
+        .getCapitalizedString(accountType);
 
       color = 'GREEN';
       title = GET_BALANCE_WALLET_TITLE
