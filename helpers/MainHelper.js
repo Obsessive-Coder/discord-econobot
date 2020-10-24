@@ -11,6 +11,18 @@ const {
 } = require('../constants/messages');
 
 module.exports = class MainHelper {
+  static getCommand(commands, name) {
+    let command = commands.get(name);
+
+    if (!command) {
+      command = commands.find(({ aliases }) => (
+        aliases && aliases.includes(name)
+      ));
+    }
+
+    return command;
+  }
+
   static handleCooldowns(message, cooldowns, name, cooldown, authorId) {
     if (!cooldowns.has(name)) {
       cooldowns.set(name, new Collection());

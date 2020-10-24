@@ -7,23 +7,27 @@ const MAX_BANK_FIELD = 'maxBankAmount';
 const SET_CURRENCY_SYMBOL = {
   name: 'set-currency-symbol',
   description: 'Sets the symbol for the currency.',
+  usage: '[symbol]',
   aliases: ['set-symbol'],
 };
 
 const SET_START_AMOUNT = {
   name: 'set-start-amount',
   description: 'Sets the new user start amount.',
+  usage: '[amount]',
   aliases: ['set-start-money'],
 };
 
 const SET_MAX_WALLET = {
   name: 'set-max-wallet',
   description: 'Sets the max wallet amount. (Set to 0 to disable)',
+  usage: '[amount]',
 };
 
 const SET_MAX_BANK = {
   name: 'set-max-bank',
   description: 'Sets the max bank amount. (Set to 0 to disable)',
+  usage: '[amount]',
 };
 
 module.exports.CURRENCY_SYMBOL_FIELD = CURRENCY_SYMBOL_FIELD;

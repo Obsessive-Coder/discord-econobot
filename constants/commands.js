@@ -11,6 +11,7 @@ const ADD_MONEY = {
   requiredArgsCount: 2,
   usage: '[wallet | bank] <member> <amount>',
   cooldown: 5,
+  aliases: ['add-cash', 'add-funds'],
 };
 
 module.children.HELP = HELP;

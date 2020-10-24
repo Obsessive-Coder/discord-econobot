@@ -38,15 +38,13 @@ client.on('message', message => {
   const { author, content } = message;
   if (!content.startsWith(prefix) || author.bot) return;
 
-  message.channel.messages.delete(message);
+  if (message.channel.type !== 'dm') {
+    message.channel.messages.delete(message);
+  }
 
   const args = content.slice(prefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();
-
-  const command = client.commands.get(commandName)
-    || client.commands.find(
-      ({ aliases }) => aliases && aliases.includes(commandName),
-    );
+  const command = MainHelper.getCommand(client.commands, commandName);
 
   if (!command) return;
 
