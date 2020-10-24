@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { Client, Collection } = require('discord.js');
+const { Op } = require('sequelize');
 const db = require('./models');
 
 // Configuration.
@@ -16,13 +17,17 @@ const {
 } = require('./constants');
 
 // Helpers.
-const { MainHelper } = require('./helpers');
+const { MainHelper, WalletHelper } = require('./helpers');
 
 // Commands.
 const commands = require('./commands');
 
+const wallets = new Collection();
 const cooldowns = new Collection();
 const client = new Client();
+
+WalletHelper.setupAdd(wallets);
+WalletHelper.setupGetWalletBalance(wallets);
 
 client.commands = commands;
 
@@ -42,6 +47,8 @@ client.on('message', message => {
   if (message.channel.type !== 'dm') {
     message.channel.messages.delete(message);
   }
+
+  wallets.add(author.id, 1);
 
   const args = content.slice(prefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();
