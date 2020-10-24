@@ -33,7 +33,10 @@ client.commands = commands;
 
 client.once('ready', () => {
   db.sequelize.sync({})
-    .then(() => {
+    .then(async () => {
+      const storedWalletBalances = await db.User.findAll();
+      storedWalletBalances.forEach(user => wallets.set(user.id, user));
+
       console.log(READY_MESSAGE);
     }).catch(error => {
       console.log(error, 'Something went wrong with syncing the database.');
@@ -47,8 +50,6 @@ client.on('message', message => {
   if (message.channel.type !== 'dm') {
     message.channel.messages.delete(message);
   }
-
-  wallets.add(author.id, 1);
 
   const args = content.slice(prefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();
@@ -67,6 +68,8 @@ client.on('message', message => {
     .handleCooldowns(message, cooldowns, name, cooldown);
 
   if (isCooldown) return;
+
+  wallets.add(author.id, 1);
 
   try {
     command.execute(message, args);
