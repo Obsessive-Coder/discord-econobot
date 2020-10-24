@@ -7,6 +7,8 @@ const MAX_BANK_FIELD = 'maxBankAmount';
 const SET_CURRENCY_SYMBOL = {
   name: 'set-currency-symbol',
   description: 'Sets the symbol for the currency.',
+  isArgsRequired: false,
+  requiredArgsCount: 0,
   usage: '[symbol]',
   aliases: ['set-symbol'],
 };
@@ -14,6 +16,8 @@ const SET_CURRENCY_SYMBOL = {
 const SET_START_AMOUNT = {
   name: 'set-start-amount',
   description: 'Sets the new user start amount.',
+  isArgsRequired: false,
+  requiredArgsCount: 0,
   usage: '[amount]',
   aliases: ['set-start-money'],
 };
@@ -21,12 +25,16 @@ const SET_START_AMOUNT = {
 const SET_MAX_WALLET = {
   name: 'set-max-wallet',
   description: 'Sets the max wallet amount. (Set to 0 to disable)',
+  isArgsRequired: false,
+  requiredArgsCount: 0,
   usage: '[amount]',
 };
 
 const SET_MAX_BANK = {
   name: 'set-max-bank',
   description: 'Sets the max bank amount. (Set to 0 to disable)',
+  isArgsRequired: false,
+  requiredArgsCount: 0,
   usage: '[amount]',
 };
 

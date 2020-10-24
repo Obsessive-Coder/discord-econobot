@@ -25,6 +25,8 @@ module.exports = class MainHelper {
   }
 
   static getUserFromMention(mention, client) {
+    if (!mention) return false;
+
     const matches = mention.match(USER_MENTION_REGEX);
 
     if (!matches) return false;

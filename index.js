@@ -17,17 +17,15 @@ const {
 } = require('./constants');
 
 // Helpers.
-const { MainHelper, WalletHelper } = require('./helpers');
+const { MainHelper } = require('./helpers');
 
 // Commands.
 const commands = require('./commands');
 
-const wallets = new Collection();
+const { wallets } = require('./helpers');
+
 const cooldowns = new Collection();
 const client = new Client();
-
-WalletHelper.setupAdd(wallets);
-WalletHelper.setupGetWalletBalance(wallets);
 
 client.commands = commands;
 
