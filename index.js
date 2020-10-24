@@ -43,9 +43,13 @@ client.on('message', message => {
   const args = content.slice(prefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();
 
-  if (!client.commands.has(commandName)) return;
+  const command = client.commands.get(commandName)
+    || client.commands.find(
+      ({ aliases }) => aliases && aliases.includes(commandName),
+    );
 
-  const command = client.commands.get(commandName);
+  if (!command) return;
+
   const { name, cooldown } = command;
 
   const isEnoughArgs = MainHelper

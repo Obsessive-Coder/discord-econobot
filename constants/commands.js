@@ -9,7 +9,7 @@ const ADD_MONEY = {
   description: 'Add money to a user.',
   isArgsRequired: true,
   requiredArgsCount: 2,
-  usage: '[pocket | bank] <member> <amount>',
+  usage: '[wallet | bank] <member> <amount>',
   cooldown: 5,
 };
 
