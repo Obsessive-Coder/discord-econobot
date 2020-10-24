@@ -19,7 +19,7 @@ module.exports = {
     // console.log(message.mentions.users);
     // console.log(amount);
 
-    let response = 'bar';
+    const response = 'bar';
 
     message.channel.send(response);
   },
