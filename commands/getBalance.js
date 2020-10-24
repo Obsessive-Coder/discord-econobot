@@ -6,7 +6,7 @@ const { currencySymbol } = require('../config/economy.json');
 // Constants.
 const {
   COMMAND_CONSTANTS, COLLECTION_CONSTANTS,
-  MESSAGE_CONSTANTS, REGEX_CONSTANTS
+  MESSAGE_CONSTANTS, REGEX_CONSTANTS,
 } = require('../constants');
 
 // Helpers.
@@ -51,9 +51,12 @@ module.exports = {
     if (user) {
       const { id, username } = user;
       const balance = wallets.getBalance(id, accountType);
+      const capitalizedAccountType = MainHelper.getCapitalizedString(accountType);
 
       color = 'GREEN';
-      title = GET_BALANCE_WALLET_TITLE;
+      title = GET_BALANCE_WALLET_TITLE
+        .replace('%accountType%', capitalizedAccountType);
+
       description = GET_BALANCE__WALLET_MESSAGE
         .replace('%username%', username)
         .replace('%accountType%', accountType)

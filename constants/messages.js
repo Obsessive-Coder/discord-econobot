@@ -16,7 +16,7 @@ const SUCCESS_HELP_MESSAGE = 'I\'ve sent you a DM with the requested command(s)'
 
 const GET_BALANCE_ERROR_TITLE = 'Unknown User';
 const GET_BALANCE_ERROR_MESSAGE = 'That user was not found. Please try again';
-const GET_BALANCE_WALLET_TITLE = 'User Balance';
+const GET_BALANCE_WALLET_TITLE = 'User %accountType% Balance';
 const GET_BALANCE__WALLET_MESSAGE = (
   '%username%\'s %accountType% balance is %currencySymbol%%balance%'
 );
