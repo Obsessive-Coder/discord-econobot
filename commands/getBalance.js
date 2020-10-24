@@ -5,13 +5,16 @@ const { currencySymbol } = require('../config/economy.json');
 
 // Constants.
 const {
-  COMMAND_CONSTANTS, MESSAGE_CONSTANTS,
+  COMMAND_CONSTANTS, COLLECTION_CONSTANTS,
+  MESSAGE_CONSTANTS, REGEX_CONSTANTS
 } = require('../constants');
 
 // Helpers.
 const { MainHelper, wallets } = require('../helpers');
 
 const { GET_BALANCE } = COMMAND_CONSTANTS;
+const { ACCOUNT_TYPES } = COLLECTION_CONSTANTS;
+const { USER_MENTION_REGEX } = REGEX_CONSTANTS;
 const {
   GET_BALANCE_ERROR_TITLE,
   GET_BALANCE_ERROR_MESSAGE,
@@ -23,7 +26,19 @@ module.exports = {
   ...GET_BALANCE,
   execute(message, args) {
     const { author, client } = message;
-    const [mention] = args;
+
+    let accountType = 'wallet';
+    let mention;
+
+    for (let i = 0; i < args.length; i++) {
+      const arg = args[i];
+
+      if (ACCOUNT_TYPES.includes(arg)) {
+        accountType = arg;
+      } else if (USER_MENTION_REGEX.test(arg)) {
+        mention = arg;
+      }
+    }
 
     const mentionValue = mention || `<@${author.id}>`;
 
@@ -35,12 +50,13 @@ module.exports = {
 
     if (user) {
       const { id, username } = user;
-      const balance = wallets.getWalletBalance(id);
+      const balance = wallets.getBalance(id, accountType);
 
       color = 'GREEN';
       title = GET_BALANCE_WALLET_TITLE;
       description = GET_BALANCE__WALLET_MESSAGE
         .replace('%username%', username)
+        .replace('%accountType%', accountType)
         .replace('%currencySymbol%', currencySymbol)
         .replace('%balance%', balance);
     }

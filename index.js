@@ -67,7 +67,7 @@ client.on('message', message => {
 
   if (isCooldown) return;
 
-  wallets.add(author.id, 1);
+  wallets.add(author.id, 1, 'wallet');
 
   try {
     command.execute(message, args);

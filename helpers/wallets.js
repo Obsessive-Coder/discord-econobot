@@ -4,6 +4,6 @@ const WalletHelper = require('./WalletHelper');
 const wallets = new Collection();
 
 WalletHelper.setupAdd(wallets);
-WalletHelper.setupGetWalletBalance(wallets);
+WalletHelper.setupGetBalance(wallets);
 
 module.exports = wallets;

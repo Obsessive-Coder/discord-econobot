@@ -3,18 +3,20 @@ const { User } = require('../models');
 module.exports = class WalletHelper {
   static setupAdd(wallets) {
     Reflect.defineProperty(wallets, 'add', {
-      value: async (id, amount) => {
+      value: async (id, amount, accountType) => {
         const user = wallets.get(id);
         const amountNumber = Number(amount);
+        const accountField = accountType === 'bank'
+          ? 'bank_balance' : 'wallet_balance';
 
         if (user) {
-          user.wallet_balance += amountNumber;
+          user[accountField] += amountNumber;
           return user.save();
         }
 
         const newUser = await User.create({
           id,
-          wallet_balance: amountNumber,
+          [accountField]: amountNumber,
         });
 
         wallets.set(id, newUser);
@@ -23,11 +25,14 @@ module.exports = class WalletHelper {
     });
   }
 
-  static setupGetWalletBalance(wallets) {
-    Reflect.defineProperty(wallets, 'getWalletBalance', {
-      value: id => {
+  static setupGetBalance(wallets) {
+    Reflect.defineProperty(wallets, 'getBalance', {
+      value: (id, accountType) => {
+        const accountField = accountType === 'bank'
+          ? 'bank_balance' : 'wallet_balance';
+
         const user = wallets.get(id);
-        return user ? user.wallet_balance : 0;
+        return user ? user[accountField] : 0;
       },
     });
   }
