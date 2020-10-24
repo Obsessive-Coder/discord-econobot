@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { Client, Collection } = require('discord.js');
+const db = require('./models');
 
 // Configuration.
 const {
@@ -26,7 +27,12 @@ const client = new Client();
 client.commands = commands;
 
 client.once('ready', () => {
-  console.log(READY_MESSAGE);
+  db.sequelize.sync({})
+    .then(() => {
+      console.log(READY_MESSAGE);
+    }).catch(error => {
+      console.log(error, 'Something went wrong with syncing the database.');
+    });
 });
 
 client.on('message', message => {

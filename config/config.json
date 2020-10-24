@@ -2,22 +2,28 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "database_development",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "database": "currency_db",
+    "host": "localhost",
+    "dialect": "sqlite",
+    "logging": false,
+    "storage": "./db/currency_db.sqlite"
   },
   "test": {
     "username": "root",
     "password": null,
     "database": "database_test",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "sqlite",
+    "logging": false,
+    "storage": "database.sqlite"
   },
   "production": {
     "username": "root",
     "password": null,
     "database": "database_production",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "sqlite",
+    "logging": false,
+    "storage": "database.sqlite"
   }
 }
