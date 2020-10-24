@@ -12,11 +12,6 @@ const {
     READY_MESSAGE,
     COMMAND_ERROR_MESSAGE,
   },
-  MESSAGE_CONSTANTS: {
-    INVALID_ARGUMENT_ERROR_MESSAGE,
-    USAGE_ERROR_MESSAGE,
-    COOLDOWN_MESSAGE,
-  },
 } = require('./constants');
 
 // Helpers.
@@ -51,12 +46,12 @@ client.on('message', message => {
   const { name, cooldown } = command;
 
   const isEnoughArgs = MainHelper
-    .handleArgsCount(message, command, args.length, author);
+    .handleArgsCount(message, command, args.length);
 
   if (!isEnoughArgs) return;
 
   const isCooldown = MainHelper
-    .handleCooldowns(message, cooldowns, name, cooldown, author.id);
+    .handleCooldowns(message, cooldowns, name, cooldown);
 
   if (isCooldown) return;
 

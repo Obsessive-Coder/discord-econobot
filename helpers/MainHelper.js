@@ -4,6 +4,7 @@ const { Collection } = require('discord.js');
 const { prefix } = require('../config/app');
 
 // Constants.
+const { USER_MENTION_REGEX } = require('../constants/regex');
 const {
   COOLDOWN_MESSAGE,
   INVALID_ARGUMENT_ERROR_MESSAGE,
@@ -23,7 +24,17 @@ module.exports = class MainHelper {
     return command;
   }
 
-  static handleCooldowns(message, cooldowns, name, cooldown, authorId) {
+  static getUserFromMention(mention, client) {
+    const matches = mention.match(USER_MENTION_REGEX);
+
+    if (!matches) return false;
+
+    const userId = matches[1];
+
+    return client.users.cache.get(userId);
+  }
+
+  static handleCooldowns(message, cooldowns, name, cooldown) {
     if (!cooldowns.has(name)) {
       cooldowns.set(name, new Collection());
     }
@@ -31,6 +42,7 @@ module.exports = class MainHelper {
     const now = Date.now();
     const timestamps = cooldowns.get(name);
     const cooldownAmount = (cooldown || 3) * 1000;
+    const { author: { id: authorId } } = message;
 
     if (timestamps.has(authorId)) {
       const expirationTime = timestamps.get(authorId) + cooldownAmount;
@@ -52,13 +64,13 @@ module.exports = class MainHelper {
     return false;
   }
 
-  static handleArgsCount(message, command, argsLength, author) {
+  static handleArgsCount(message, command, argsLength) {
     const {
       name, isArgsRequired, requiredArgsCount, usage,
     } = command;
 
     if (isArgsRequired && argsLength < requiredArgsCount) {
-      let reply = `${INVALID_ARGUMENT_ERROR_MESSAGE}, ${author}!`;
+      let reply = `${INVALID_ARGUMENT_ERROR_MESSAGE}, ${message.author}!`;
 
       if (command.usage) {
         reply += `\n${USAGE_ERROR_MESSAGE} \`${prefix}${name} ${usage}\``;
