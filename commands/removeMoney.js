@@ -14,27 +14,27 @@ const {
 } = require('../helpers');
 
 // Destruct constants.
-const { ADD_MONEY } = COMMANDS_CONSTANTS;
+const { REMOVE_MONEY } = COMMANDS_CONSTANTS;
 const { USER_MENTION_REGEX } = REGEX_CONSTANTS;
 const {
-  ADD_MONEY_ERROR_TITLE,
+  REMOVE_MONEY_ERROR_TITLE,
   AMOUNT_ERROR_MESSAGE,
-  ADD_MONEY_TITLE,
-  ADD_MONEY_MESSAGE,
+  REMOVE_MONEY_TITLE,
+  REMOVE_MONEY_MESSAGE,
   GET_BALANCE_MESSAGE,
   NO_USER_MENTIONED_ERROR_MESSAGE,
 } = MESSAGES_CONSTANTS;
 
 
 module.exports = {
-  ...ADD_MONEY,
+  ...REMOVE_MONEY,
   execute(message, args) {
     const userMention = args.find(arg => USER_MENTION_REGEX.test(arg));
     const amount = UTILITY_HELPER.getArgsAmount(args);
 
     const messageEmbed = new MessageEmbed()
       .setColor('RED')
-      .setTitle(ADD_MONEY_ERROR_TITLE);
+      .setTitle(REMOVE_MONEY_ERROR_TITLE);
 
     let isError = false;
 
@@ -50,7 +50,7 @@ module.exports = {
       isError = true;
     }
 
-    // Add the amount to the user's balance.
+    // Remove the amount from the user's balance.
     if (!isError) {
       const { client } = message;
       const accountType = UTILITY_HELPER.getArgsAccountType(args);
@@ -60,11 +60,11 @@ module.exports = {
         id: recipientId,
       } = MAIN_HELPER.getUserFromMention(userMention, client);
 
-      WALLETS.add(recipientId, amount, accountType);
+      WALLETS.add(recipientId, -amount, accountType);
 
       const newBalance = WALLETS.getBalance(recipientId, accountType);
 
-      const addMessage = ADD_MONEY_MESSAGE
+      const removeMessage = REMOVE_MONEY_MESSAGE
         .replace('%symbol%', currencySymbol)
         .replace('%amount%', amount)
         .replace('%name%', username)
@@ -78,9 +78,9 @@ module.exports = {
 
       messageEmbed
         .setColor('GREEN')
-        .setTitle(ADD_MONEY_TITLE)
+        .setTitle(REMOVE_MONEY_TITLE)
         .setDescription(
-          `${addMessage}\n${currentBalanceMessage}`,
+          `${removeMessage}\n${currentBalanceMessage}`,
         );
     }
 

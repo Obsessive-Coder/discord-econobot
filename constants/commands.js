@@ -8,11 +8,19 @@ const variables = {
   },
   ADD_MONEY: {
     name: 'add-money',
-    description: 'Add money to a user.',
+    description: 'Add money to a user\'s balance.',
     isArgsRequired: true,
     requiredArgsCount: 2,
     usage: '[wallet | bank] <member> <amount>',
-    aliases: ['add-funds'],
+    aliases: ['add', 'add-funds'],
+  },
+  REMOVE_MONEY: {
+    name: 'remove-money',
+    description: 'Remove money from a user\'s balance.',
+    isArgsRequired: true,
+    requiredArgsCount: 2,
+    usage: '[wallet | bank] <member> <amount>',
+    aliases: ['remove', 'remove-funds'],
   },
   TRANSFER_MONEY: {
     name: 'transfer-money',

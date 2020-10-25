@@ -11,6 +11,7 @@ module.exports = winston.createLogger({
   ],
   format: winston.format.printf(({ level, message }) => {
     const colorMethod = LOG_LEVEL_COLORS[level];
-    return `[${chalk[colorMethod](level.toUpperCase())}] - ${message}`;
+    const levelText = chalk[colorMethod](level.toUpperCase());
+    return `[${levelText}] - ${message}`;
   }),
 });
