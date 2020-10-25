@@ -31,7 +31,15 @@ const variables = {
   TRANSFER_TITLE: 'Transferred Money',
   TRANSFER_MESSAGE: 'Successfully transferred %currencySymbol%%amount% to %username%.',
 
-  TRANSFER_INSUFFICIENT_FUNDS_ERROR_MESSAGE: 'Insufficient funds. You only have %balance%.',
+  DEPOSIT_ERROR_TITLE: 'Deposit Error',
+  DEPOSIT_TITLE: 'Deposited Money',
+  DEPOSIT_MESSAGE: 'Successfully deposited %symbol%%amount% into your bank.',
+
+  WITHDRAW_ERROR_TITLE: 'Withdraw Error',
+  WITHDRAW_TITLE: 'Withdrew Money',
+  WITHDRAW_MESSAGE: 'Successfully withdrew %symbol%%amount% from your bank.',
+
+  INSUFFICIENT_FUNDS_ERROR_MESSAGE: 'Insufficient funds. You only have %balance%.',
   AMOUNT_ERROR_MESSAGE: 'Amount must be a number greater than 0.',
   NO_USER_MENTIONED_ERROR_MESSAGE: 'No user was mentioned.',
 };

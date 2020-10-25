@@ -19,7 +19,7 @@ const { USER_MENTION_REGEX } = REGEX_CONSTANTS;
 const {
   TRANSFER_ERROR_TITLE,
   AMOUNT_ERROR_MESSAGE,
-  TRANSFER_INSUFFICIENT_FUNDS_ERROR_MESSAGE,
+  INSUFFICIENT_FUNDS_ERROR_MESSAGE,
   TRANSFER_TITLE,
   TRANSFER_MESSAGE,
   BALANCE_MESSAGE,
@@ -59,7 +59,7 @@ module.exports = {
     // Error if the user doesn't have enough money.
     if (!isError && transferAmount > currentBalance) {
       messageEmbed.setDescription(
-        TRANSFER_INSUFFICIENT_FUNDS_ERROR_MESSAGE
+        INSUFFICIENT_FUNDS_ERROR_MESSAGE
           .replace('%balance%', currentBalance),
       );
 

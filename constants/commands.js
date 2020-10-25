@@ -38,6 +38,22 @@ const variables = {
     usage: '[wallet | bank] <member> <amount>',
     aliases: ['remove', 'remove-funds'],
   },
+  DEPOSIT_MONEY: {
+    name: 'deposit-money',
+    description: 'Deposit money in your bank.',
+    isArgsRequired: true,
+    requiredArgsCount: 1,
+    usage: '<amount | all>',
+    aliases: ['deposit', 'deposit-funds'],
+  },
+  WITHDRAW_MONEY: {
+    name: 'withdraw-money',
+    description: 'Withdraw money from your bank.',
+    isArgsRequired: true,
+    requiredArgsCount: 1,
+    usage: '<amount | all>',
+    aliases: ['withdraw', 'withdraw-funds'],
+  },
   TRANSFER_MONEY: {
     name: 'transfer-money',
     description: 'Transfer money to another user.',
