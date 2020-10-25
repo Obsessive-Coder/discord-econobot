@@ -9,7 +9,7 @@ const { prefix, token } = require('./config/app');
 const { APPLICATION_CONSTANTS, MESSAGES_CONSTANTS } = require('./constants');
 
 // Helpers.
-const { MAIN_HELPER } = require('./helpers');
+const { MAIN_HELPER, LOGGER } = require('./helpers');
 
 // Commands.
 const commands = require('./commands');
@@ -19,7 +19,9 @@ const { WALLETS } = require('./helpers');
 
 // Destruct constants.
 const { READY_MESSAGE, COMMAND_ERROR_MESSAGE } = APPLICATION_CONSTANTS;
-const { UNKNOWN_COMMAND_ERROR_MESSAGE } = MESSAGES_CONSTANTS;
+const {
+  UNKNOWN_COMMAND_ERROR_MESSAGE, DB_SYNC_ERROR_MESSAGE,
+} = MESSAGES_CONSTANTS;
 
 // Create the client.
 const client = new Client();
@@ -32,11 +34,9 @@ client.once('ready', () => {
       const allUsers = await db.User.findAll();
       allUsers.forEach(user => WALLETS.set(user.id, user));
 
-      // eslint-disable-next-line no-console
-      console.log(READY_MESSAGE);
+      LOGGER.log('info', READY_MESSAGE);
     }).catch(error => {
-      // eslint-disable-next-line no-console
-      console.log(error, 'Something went wrong with syncing the database.');
+      LOGGER.log('error', `${DB_SYNC_ERROR_MESSAGE}\n${error}`);
     });
 });
 
@@ -56,11 +56,11 @@ client.on('message', message => {
 
   // Error if there's no command for the command name.
   if (!command) {
-    message.reply(
-      UNKNOWN_COMMAND_ERROR_MESSAGE
-        .replace('%prefix%', prefix)
-        .replace('%command%', commandName),
-    );
+    const errorMessage = UNKNOWN_COMMAND_ERROR_MESSAGE
+      .replace('%prefix%', prefix)
+      .replace('%command%', commandName);
+
+    message.reply(errorMessage);
     return;
   }
 
@@ -79,12 +79,14 @@ client.on('message', message => {
 
   try {
     command.execute(message, args);
-  } catch ({ message: errorMessage }) {
+  } catch (error) {
     let response = COMMAND_ERROR_MESSAGE;
 
-    if (errorMessage) {
-      response += `\n\`ERROR: ${errorMessage}\``;
+    if (error) {
+      response += `\n\`[ERROR] - ${error}\``;
     }
+
+    LOGGER.log('error', `${COMMAND_ERROR_MESSAGE} - ${error}`);
 
     message.reply(response);
   }

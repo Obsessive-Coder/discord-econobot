@@ -27,6 +27,7 @@ const variables = {
   NO_USER_MENTIONED_ERROR_MESSAGE: 'No user was mentioned for the transfer.',
   LEADERBOARD_TITLE: '%type% Funds Leaderboard',
   UNKNOWN_COMMAND_ERROR_MESSAGE: '`%prefix%%command%` is an unknown command.',
+  DB_SYNC_ERROR_MESSAGE: 'Something went wrong with syncing the database.',
 };
 
 // Export each individually.

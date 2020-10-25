@@ -1,6 +1,6 @@
 {
   "name": "ds_economy",
-  "version": "0.30.7",
+  "version": "0.32.7",
   "description": "A discord economy bot",
   "main": "index.js",
   "author": "Jared Huffstutler",
@@ -12,11 +12,13 @@
     "lint": "eslint *.js **/*.js --fix"
   },
   "dependencies": {
+    "chalk": "^4.1.0",
     "discord.js": "^12.4.0",
     "dotenv": "^8.2.0",
     "sequelize": "^6.3.5",
     "sqlite3": "^5.0.0",
-    "uuid": "^8.3.1"
+    "uuid": "^8.3.1",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "eslint": "^7.11.0",

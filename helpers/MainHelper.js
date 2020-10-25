@@ -53,9 +53,11 @@ module.exports = class MAIN_HELPER {
 
       if (now < expirationTime) {
         const timeLeft = ((expirationTime - now) / 1000).toFixed(1);
-        message.reply(
-          COOLDOWN_MESSAGE.replace('%timeLeft%', timeLeft).replace('%name%', name),
-        );
+        const errorMessage = COOLDOWN_MESSAGE
+          .replace('%timeLeft%', timeLeft)
+          .replace('%name%', name);
+
+        message.reply(errorMessage);
 
         return true;
       }
