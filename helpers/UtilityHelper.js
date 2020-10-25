@@ -68,4 +68,62 @@ module.exports = class UTILITY_HELPER {
       });
     });
   }
+
+  static getTransactionCategory(transactionType) {
+    let category;
+
+    switch (transactionType) {
+      case 'add':
+        category = 'addRemove';
+        break;
+      case 'remove':
+        category = 'addRemove';
+        break;
+      case 'deposit':
+        category = 'depositWithdraw';
+        break;
+      case 'withdraw':
+        category = 'depositWithdraw';
+        break;
+      default:
+        category = transactionType;
+        break;
+    }
+
+    return category;
+  }
+
+  static getPastTenseTransaction(transactionType) {
+    let pastTenseTransaction;
+
+    switch (transactionType) {
+      case 'add':
+        pastTenseTransaction = 'added';
+        break;
+      case 'remove':
+        pastTenseTransaction = 'removed';
+        break;
+      case 'deposit':
+        pastTenseTransaction = 'deposited';
+        break;
+      case 'withdraw':
+        pastTenseTransaction = 'withdrew';
+        break;
+      case 'transfer':
+        pastTenseTransaction = 'transferred';
+        break;
+      default:
+        pastTenseTransaction = transactionType;
+        break;
+    }
+
+    return pastTenseTransaction;
+  }
+
+  static getToFromText(transactionType) {
+    const isRemoveWithdraw = transactionType === 'remove'
+      || transactionType === 'withdraw';
+
+    return isRemoveWithdraw ? 'from' : 'to';
+  }
 };

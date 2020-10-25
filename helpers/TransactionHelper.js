@@ -33,7 +33,7 @@ module.exports = class TransactionHelper {
       },
     } = message;
 
-    const category = TransactionHelper
+    const category = UTILITY_HELPER
       .getTransactionCategory(transactionType);
 
     let fromBalance = 0;
@@ -98,7 +98,7 @@ module.exports = class TransactionHelper {
     }
 
     if (!isError) {
-      const pastTenseTransaction = TransactionHelper
+      const pastTenseTransaction = UTILITY_HELPER
         .getPastTenseTransaction(transactionType);
 
       const {
@@ -132,7 +132,7 @@ module.exports = class TransactionHelper {
       const walletBalance = WALLETS.getBalance(balanceUserId, 'wallet');
       const bankBalance = WALLETS.getBalance(balanceUserId, 'bank');
 
-      const toFromText = TransactionHelper.getToFromText(transactionType);
+      const toFromText = UTILITY_HELPER.getToFromText(transactionType);
 
       const isWithdraw = transactionType === 'withdraw';
       let messageAccount = isWithdraw ? 'bank' : toAccount;
@@ -173,63 +173,5 @@ module.exports = class TransactionHelper {
     }
 
     message.channel.send(messageEmbed);
-  }
-
-  static getTransactionCategory(transactionType) {
-    let category;
-
-    switch (transactionType) {
-      case 'add':
-        category = 'addRemove';
-        break;
-      case 'remove':
-        category = 'addRemove';
-        break;
-      case 'deposit':
-        category = 'depositWithdraw';
-        break;
-      case 'withdraw':
-        category = 'depositWithdraw';
-        break;
-      default:
-        category = transactionType;
-        break;
-    }
-
-    return category;
-  }
-
-  static getPastTenseTransaction(transactionType) {
-    let pastTenseTransaction;
-
-    switch (transactionType) {
-      case 'add':
-        pastTenseTransaction = 'added';
-        break;
-      case 'remove':
-        pastTenseTransaction = 'removed';
-        break;
-      case 'deposit':
-        pastTenseTransaction = 'deposited';
-        break;
-      case 'withdraw':
-        pastTenseTransaction = 'withdrew';
-        break;
-      case 'transfer':
-        pastTenseTransaction = 'transferred';
-        break;
-      default:
-        pastTenseTransaction = transactionType;
-        break;
-    }
-
-    return pastTenseTransaction;
-  }
-
-  static getToFromText(transactionType) {
-    const isRemoveWithdraw = transactionType === 'remove'
-      || transactionType === 'withdraw';
-
-    return isRemoveWithdraw ? 'from' : 'to';
   }
 };
