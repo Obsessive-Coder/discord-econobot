@@ -18,8 +18,8 @@ const variables = {
     name: 'transfer-money',
     description: 'Transfer money to another user.',
     isArgsRequired: true,
-    requiredArgsCount: 1,
-    usage: '[wallet | bank] <member>',
+    requiredArgsCount: 2,
+    usage: '[wallet | bank] <member> <amount | all>',
     aliases: ['transfer', 'transfer-funds'],
   },
   GET_BALANCE: {

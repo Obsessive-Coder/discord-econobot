@@ -16,9 +16,15 @@ const variables = {
   SUCCESS_HELP_MESSAGE: 'I\'ve sent you a DM with the requested command(s)',
   GET_BALANCE_ERROR_TITLE: 'Unknown User',
   GET_BALANCE_ERROR_MESSAGE: 'That user was not found. Please try again',
-  GET_BALANCE_WALLET_TITLE: 'User %accountType% Balance',
-  GET_BALANCE__WALLET_MESSAGE:
+  GET_BALANCE_TITLE: 'User %accountType% Balance',
+  GET_BALANCE_MESSAGE:
     '%username%\'s %accountType% balance is %currencySymbol%%balance%',
+  TRANSFER_ERROR_TITLE: 'Transfer Error',
+  TRANSFER_AMOUNT_ERROR_MESSAGE: 'Transfer amount must be a number greater than 0.',
+  TRANSFER_INSUFFICIENT_FUNDS_ERROR_MESSAGE: 'Insufficient funds. You only have %balance%.',
+  TRANSFER_TITLE: 'Transfer Money',
+  TRANSFER_MESSAGE: 'Successfully transferred %currencySymbol%%amount% to %username%.',
+  NO_USER_MENTIONED_ERROR_MESSAGE: 'No user was mentioned for the transfer.',
 };
 
 // Export each individually.

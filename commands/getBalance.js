@@ -6,6 +6,7 @@ const { currencySymbol } = require('../config/economy.json');
 // Constants.
 const {
   COMMANDS_CONSTANTS, MESSAGES_CONSTANTS, REGEX_CONSTANTS,
+  COLLECTIONS_CONSTANTS,
 } = require('../constants');
 
 // Helpers.
@@ -13,13 +14,15 @@ const {
   WALLETS, MAIN_HELPER, UTILITY_HELPER,
 } = require('../helpers');
 
+// Destruct constants.
 const { GET_BALANCE } = COMMANDS_CONSTANTS;
 const { USER_MENTION_REGEX } = REGEX_CONSTANTS;
+const { ACCOUNT_TYPES } = COLLECTIONS_CONSTANTS;
 const {
   GET_BALANCE_ERROR_TITLE,
   GET_BALANCE_ERROR_MESSAGE,
-  GET_BALANCE_WALLET_TITLE,
-  GET_BALANCE__WALLET_MESSAGE,
+  GET_BALANCE_TITLE,
+  GET_BALANCE_MESSAGE,
 } = MESSAGES_CONSTANTS;
 
 module.exports = {
@@ -27,12 +30,11 @@ module.exports = {
   execute(message, args) {
     const { author, client } = message;
 
-    const accountTypeArg = args.find(arg => !USER_MENTION_REGEX.test(arg));
-    const accountType = accountTypeArg === 'bank' ? accountTypeArg : 'wallet';
+    const accountType = UTILITY_HELPER.getArgsAccountType(args);
+
+    // Get the mentioned user.
     const mention = args.find(arg => USER_MENTION_REGEX.test(arg));
-
     const mentionValue = mention || `<@${author.id}>`;
-
     const user = MAIN_HELPER.getUserFromMention(mentionValue, client);
 
     let color = 'RED';
@@ -46,10 +48,10 @@ module.exports = {
         .getCapitalizedString(accountType);
 
       color = 'GREEN';
-      title = GET_BALANCE_WALLET_TITLE
+      title = GET_BALANCE_TITLE
         .replace('%accountType%', capitalizedAccountType);
 
-      description = GET_BALANCE__WALLET_MESSAGE
+      description = GET_BALANCE_MESSAGE
         .replace('%username%', username)
         .replace('%accountType%', accountType)
         .replace('%currencySymbol%', currencySymbol)

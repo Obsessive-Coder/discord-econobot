@@ -16,7 +16,7 @@ const exportVariables = {};
 for (let i = 0; i < files.length; i++) {
   const file = files[i];
   const name = file.split('.js')[0];
-  const finalName = UTILITY_HELPER.getUpperCaseSnakeCase(name);
+  const finalName = UTILITY_HELPER.getUpperSnakeCase(name);
 
   const helper = require(join(__dirname, file));
 

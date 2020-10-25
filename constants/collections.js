@@ -1,6 +1,5 @@
 const variables = {
-  FLOAT_REGEX: /^[-\d]+(\.\d{1,2})?$/,
-  USER_MENTION_REGEX: /^<@!?(\d+)>$/,
+  ACCOUNT_TYPES: ['wallet', 'bank'],
 };
 
 // Export each individually.
