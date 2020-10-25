@@ -64,7 +64,7 @@ module.exports = class UTILITY_HELPER {
 
       return ({
         name: `(${index + 1}) ${username}`,
-        value: `${currencySymbol} ${total}`,
+        value: `${currencySymbol}${total}`,
       });
     });
   }
