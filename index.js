@@ -34,8 +34,10 @@ client.once('ready', () => {
       const storedWalletBalances = await db.User.findAll();
       storedWalletBalances.forEach(user => WALLETS.set(user.id, user));
 
+      // eslint-disable-next-line no-console
       console.log(READY_MESSAGE);
     }).catch(error => {
+      // eslint-disable-next-line no-console
       console.log(error, 'Something went wrong with syncing the database.');
     });
 });
