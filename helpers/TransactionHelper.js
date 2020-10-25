@@ -69,7 +69,7 @@ module.exports = class TransactionHelper {
         .replace('%symbol%', currencySymbol)
         .replace('%amount%', amount)
         .replace('%toFrom%', toFromText)
-        .replace('%name%', username)
+        .replace('%name%', `${username}'s`)
         .replace('%type%', accountType);
 
       const balanceMessage = BALANCE_MESSAGE

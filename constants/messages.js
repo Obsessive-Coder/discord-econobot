@@ -25,7 +25,7 @@ const variables = {
   TRANSACTION_ERROR_TITLE: 'Transaction Error',
   TRANSACTION_TITLE: '%transaction% Money',
   TRANSACTION_MESSAGE:
-    'Successfully %transaction% %symbol%%amount% %toFrom% %name%\'s %type% balance.',
+    'Successfully %transaction% %symbol%%amount% %toFrom% %name% %type% balance.',
 
   TRANSFER_ERROR_TITLE: 'Transfer Error',
   TRANSFER_TITLE: 'Transferred Money',
