@@ -18,7 +18,7 @@ const { TRANSFER_MONEY } = COMMANDS_CONSTANTS;
 const { USER_MENTION_REGEX } = REGEX_CONSTANTS;
 const {
   TRANSFER_ERROR_TITLE,
-  TRANSFER_AMOUNT_ERROR_MESSAGE,
+  AMOUNT_ERROR_MESSAGE,
   TRANSFER_INSUFFICIENT_FUNDS_ERROR_MESSAGE,
   TRANSFER_TITLE,
   TRANSFER_MESSAGE,
@@ -52,7 +52,7 @@ module.exports = {
 
     // Error if amount is undefined or not a number.
     if (!transferAmount || Number.isNaN(transferAmount) || transferAmount <= 0) {
-      messageEmbed.setDescription(TRANSFER_AMOUNT_ERROR_MESSAGE);
+      messageEmbed.setDescription(AMOUNT_ERROR_MESSAGE);
       isError = true;
     }
 
@@ -66,10 +66,9 @@ module.exports = {
       isError = true;
     }
 
-    // Error if no other use was mentioned.
+    // Error if no other user was mentioned.
     if (!isError && !transferMention) {
       messageEmbed.setDescription(NO_USER_MENTIONED_ERROR_MESSAGE);
-
       isError = true;
     }
 
