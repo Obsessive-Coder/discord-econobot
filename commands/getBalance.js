@@ -5,15 +5,15 @@ const { currencySymbol } = require('../config/economy.json');
 
 // Constants.
 const {
-  COMMAND_CONSTANTS, COLLECTION_CONSTANTS,
-  MESSAGE_CONSTANTS, REGEX_CONSTANTS,
+  COMMAND_CONSTANTS, MESSAGE_CONSTANTS, REGEX_CONSTANTS,
 } = require('../constants');
 
 // Helpers.
-const { wallets, MainHelper, UtilityHelper } = require('../helpers');
+const {
+  wallets, MainHelper, UtilityHelper,
+} = require('../helpers');
 
 const { GET_BALANCE } = COMMAND_CONSTANTS;
-const { ACCOUNT_TYPES } = COLLECTION_CONSTANTS;
 const { USER_MENTION_REGEX } = REGEX_CONSTANTS;
 const {
   GET_BALANCE_ERROR_TITLE,
@@ -27,18 +27,9 @@ module.exports = {
   execute(message, args) {
     const { author, client } = message;
 
-    let accountType = 'wallet';
-    let mention;
-
-    for (let i = 0; i < args.length; i++) {
-      const arg = args[i];
-
-      if (ACCOUNT_TYPES.includes(arg)) {
-        accountType = arg;
-      } else if (USER_MENTION_REGEX.test(arg)) {
-        mention = arg;
-      }
-    }
+    const accountTypeArg = args.find(arg => !USER_MENTION_REGEX.test(arg));
+    const accountType = accountTypeArg === 'bank' ? accountTypeArg : 'wallet';
+    const mention = args.find(arg => USER_MENTION_REGEX.test(arg));
 
     const mentionValue = mention || `<@${author.id}>`;
 
