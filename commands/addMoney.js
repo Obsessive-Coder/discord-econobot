@@ -10,7 +10,7 @@ const { INVALID_ARGUMENT_ERROR_MESSAGE } = MESSAGES_CONSTANTS;
 const { currencySymbol } = require('../config/defaultEconomy');
 
 // Helpers.
-const { Config_Helper } = require('../helpers');
+const { CONFIG_HELPER } = require('../helpers');
 
 module.exports = {
   ...ADD_MONEY,

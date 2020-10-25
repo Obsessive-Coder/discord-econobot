@@ -1,6 +1,5 @@
 require('dotenv').config();
 const { Client, Collection } = require('discord.js');
-const { Op } = require('sequelize');
 const db = require('./models');
 
 // Configuration.
