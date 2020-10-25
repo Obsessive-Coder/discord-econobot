@@ -1,22 +1,12 @@
 require('dotenv').config();
-const { Client, Collection } = require('discord.js');
+const { Client } = require('discord.js');
 const db = require('./models');
 
 // Configuration.
-const {
-  APP_CONFIG: { prefix, token },
-} = require('./config');
+const { prefix, token } = require('./config/app');
 
 // Constants.
-const {
-  APPLICATION_CONSTANTS: {
-    READY_MESSAGE,
-    COMMAND_ERROR_MESSAGE,
-  },
-  MESSAGES_CONSTANTS: {
-    UNKNOWN_COMMAND_ERROR_MESSAGE,
-  },
-} = require('./constants');
+const { APPLICATION_CONSTANTS, MESSAGES_CONSTANTS } = require('./constants');
 
 // Helpers.
 const { MAIN_HELPER } = require('./helpers');
@@ -24,9 +14,14 @@ const { MAIN_HELPER } = require('./helpers');
 // Commands.
 const commands = require('./commands');
 
+// User wallets collection.
 const { WALLETS } = require('./helpers');
 
-const cooldowns = new Collection();
+// Destruct constants.
+const { READY_MESSAGE, COMMAND_ERROR_MESSAGE } = APPLICATION_CONSTANTS;
+const { UNKNOWN_COMMAND_ERROR_MESSAGE } = MESSAGES_CONSTANTS;
+
+// Create the client.
 const client = new Client();
 
 client.commands = commands;
@@ -34,8 +29,8 @@ client.commands = commands;
 client.once('ready', () => {
   db.sequelize.sync({})
     .then(async () => {
-      const storedWalletBalances = await db.User.findAll();
-      storedWalletBalances.forEach(user => WALLETS.set(user.id, user));
+      const allUsers = await db.User.findAll();
+      allUsers.forEach(user => WALLETS.set(user.id, user));
 
       // eslint-disable-next-line no-console
       console.log(READY_MESSAGE);
@@ -59,6 +54,7 @@ client.on('message', message => {
   const commandName = args.shift().toLowerCase();
   const command = MAIN_HELPER.getCommand(client.commands, commandName);
 
+  // Error if there's no command for the command name.
   if (!command) {
     message.reply(
       UNKNOWN_COMMAND_ERROR_MESSAGE
@@ -68,15 +64,16 @@ client.on('message', message => {
     return;
   }
 
+  // Error if not enough required arguments.
   const isEnoughArgs = MAIN_HELPER
     .handleArgsCount(message, command, args.length);
 
   if (!isEnoughArgs) return;
 
+  // Error if cooldown period.
   const { name, cooldown } = command;
-
   const isCooldown = MAIN_HELPER
-    .handleCooldowns(message, cooldowns, name, cooldown);
+    .handleCooldowns(message, name, cooldown);
 
   if (isCooldown) return;
 

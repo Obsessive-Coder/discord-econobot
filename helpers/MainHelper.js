@@ -11,6 +11,8 @@ const {
   USAGE_ERROR_MESSAGE,
 } = require('../constants/messages');
 
+const cooldowns = new Collection();
+
 module.exports = class MAIN_HELPER {
   static getCommand(commands, name) {
     let command = commands.get(name);
@@ -36,7 +38,7 @@ module.exports = class MAIN_HELPER {
     return client.users.cache.get(userId);
   }
 
-  static handleCooldowns(message, cooldowns, name, cooldown) {
+  static handleCooldowns(message, name, cooldown) {
     if (!cooldowns.has(name)) {
       cooldowns.set(name, new Collection());
     }
