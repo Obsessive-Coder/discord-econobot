@@ -19,6 +19,8 @@ module.exports = {
     // console.log(message.mentions.users);
     // console.log(amount);
 
+    const x = message.y.t;
+
     const response = 'bar';
 
     message.channel.send(response);

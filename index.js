@@ -13,6 +13,9 @@ const {
     READY_MESSAGE,
     COMMAND_ERROR_MESSAGE,
   },
+  MESSAGES_CONSTANTS: {
+    UNKNOWN_COMMAND_ERROR_MESSAGE,
+  },
 } = require('./constants');
 
 // Helpers.
@@ -43,25 +46,34 @@ client.once('ready', () => {
 });
 
 client.on('message', message => {
-  const { author, content } = message;
+  const { author, channel, content } = message;
   if (!content.startsWith(prefix) || author.bot) return;
 
-  if (message.channel.type !== 'dm') {
-    message.channel.messages.delete(message);
+  // Delete the command message.
+  if (channel.type !== 'dm') {
+    channel.messages.delete(message);
   }
 
+  // Get the command and its arguments.
   const args = content.slice(prefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();
   const command = MAIN_HELPER.getCommand(client.commands, commandName);
 
-  if (!command) return;
-
-  const { name, cooldown } = command;
+  if (!command) {
+    message.reply(
+      UNKNOWN_COMMAND_ERROR_MESSAGE
+        .replace('%prefix%', prefix)
+        .replace('%command%', commandName),
+    );
+    return;
+  }
 
   const isEnoughArgs = MAIN_HELPER
     .handleArgsCount(message, command, args.length);
 
   if (!isEnoughArgs) return;
+
+  const { name, cooldown } = command;
 
   const isCooldown = MAIN_HELPER
     .handleCooldowns(message, cooldowns, name, cooldown);
@@ -70,8 +82,14 @@ client.on('message', message => {
 
   try {
     command.execute(message, args);
-  } catch (error) {
-    message.reply(COMMAND_ERROR_MESSAGE);
+  } catch ({ message: errorMessage }) {
+    let response = COMMAND_ERROR_MESSAGE;
+
+    if (errorMessage) {
+      response += `\n\`ERROR: ${errorMessage}\``;
+    }
+
+    message.reply(response);
   }
 });
 

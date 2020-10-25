@@ -72,13 +72,13 @@ module.exports = class MAIN_HELPER {
     } = command;
 
     if (isArgsRequired && argsLength < requiredArgsCount) {
-      let reply = `${INVALID_ARGUMENT_ERROR_MESSAGE}, ${message.author}!`;
+      let reply = INVALID_ARGUMENT_ERROR_MESSAGE;
 
       if (command.usage) {
         reply += `\n${USAGE_ERROR_MESSAGE} \`${prefix}${name} ${usage}\``;
       }
 
-      message.channel.send(reply);
+      message.reply(reply);
 
       return false;
     }

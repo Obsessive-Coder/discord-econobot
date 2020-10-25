@@ -26,6 +26,7 @@ const variables = {
   TRANSFER_MESSAGE: 'Successfully transferred %currencySymbol%%amount% to %username%.',
   NO_USER_MENTIONED_ERROR_MESSAGE: 'No user was mentioned for the transfer.',
   LEADERBOARD_TITLE: '%type% Funds Leaderboard',
+  UNKNOWN_COMMAND_ERROR_MESSAGE: '`%prefix%%command%` is an unknown command.',
 };
 
 // Export each individually.
