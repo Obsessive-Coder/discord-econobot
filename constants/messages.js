@@ -29,7 +29,7 @@ const variables = {
 
   TRANSFER_ERROR_TITLE: 'Transfer Error',
   TRANSFER_TITLE: 'Transferred Money',
-  TRANSFER_MESSAGE: 'Successfully transferred %currencySymbol%%amount% to %username%.',
+  TRANSFER_MESSAGE: 'Successfully transferred %symbol%%amount% to %name%.',
 
   DEPOSIT_ERROR_TITLE: 'Deposit Error',
   DEPOSIT_TITLE: 'Deposited Money',

@@ -85,12 +85,12 @@ module.exports = {
       const newBalance = WALLETS.getBalance(authorId, accountType);
 
       const transferMessage = TRANSFER_MESSAGE
-        .replace('%currencySymbol%', currencySymbol)
+        .replace('%symbol%', currencySymbol)
         .replace('%amount%', transferAmount)
-        .replace('%username%', recipientName);
+        .replace('%name%', recipientName);
 
       const currentBalanceMessage = BALANCE_MESSAGE
-        .replace('%username%', senderName)
+        .replace('%name%', senderName)
         .replace('%type%', accountType)
         .replace('%symbol%', currencySymbol)
         .replace('%balance%', newBalance);
