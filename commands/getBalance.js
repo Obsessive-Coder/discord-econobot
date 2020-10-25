@@ -6,7 +6,7 @@ const { currencySymbol } = require('../config/economy.json');
 // Constants.
 const {
   COMMANDS_CONSTANTS, MESSAGES_CONSTANTS, REGEX_CONSTANTS,
-  COLLECTIONS_CONSTANTS,
+
 } = require('../constants');
 
 // Helpers.
@@ -17,7 +17,6 @@ const {
 // Destruct constants.
 const { GET_BALANCE } = COMMANDS_CONSTANTS;
 const { USER_MENTION_REGEX } = REGEX_CONSTANTS;
-const { ACCOUNT_TYPES } = COLLECTIONS_CONSTANTS;
 const {
   GET_BALANCE_ERROR_TITLE,
   GET_BALANCE_ERROR_MESSAGE,

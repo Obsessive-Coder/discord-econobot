@@ -30,6 +30,14 @@ const variables = {
     usage: '[wallet | bank] [member]',
     aliases: ['get-money', 'get-funds'],
   },
+  SHOW_LEADERBOARD: {
+    name: 'show-leaderboard',
+    description: 'Show the top 10 users.',
+    isArgsRequired: false,
+    requiredArgsCount: 0,
+    usage: '[wallet | bank | total]',
+    aliases: ['leaderboard', 'leaders', 'show-leaders'],
+  },
 };
 
 // Export each individually.

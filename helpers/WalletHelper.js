@@ -5,6 +5,24 @@ module.exports = class WalletHelper {
     return accountType === 'bank' ? 'bank_balance' : 'wallet_balance';
   }
 
+  static getOtherAccountField(accountType) {
+    const otherAccountType = accountType === 'bank' ? 'wallet' : 'bank';
+    return WalletHelper.getAccountField(otherAccountType);
+  }
+
+  static getUserTotalBalance(user, accountType, isTotalBoard) {
+    const accountField = WalletHelper.getAccountField(accountType);
+
+    let total = user[accountField];
+
+    if (isTotalBoard) {
+      const otherAccountField = WalletHelper.getOtherAccountField(accountType);
+      total += user[otherAccountField];
+    }
+
+    return total;
+  }
+
   static setupAdd(wallets) {
     Reflect.defineProperty(wallets, 'add', {
       value: async (id, amount, accountType) => {

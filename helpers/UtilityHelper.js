@@ -1,6 +1,12 @@
-// Destruct constants.
+// Economy variables.
+const { currencySymbol } = require('../config/economy.json');
+
+// Constants.
 const { ACCOUNT_TYPES } = require('../constants/collections');
 const { FLOAT_REGEX, USER_MENTION_REGEX } = require('../constants/regex');
+
+// Helpers.
+const WALLET_HELPER = require('./WalletHelper');
 
 module.exports = class UTILITY_HELPER {
   static getCapitalizedString(value) {
@@ -33,6 +39,33 @@ module.exports = class UTILITY_HELPER {
       const isNumber = FLOAT_REGEX.test(arg);
 
       return !isMention && isNumber;
+    });
+  }
+
+  static getLeaders(wallets, accountType, isTotalBoard, usersCache) {
+    return wallets.sort((userA, userB) => {
+      const totalA = WALLET_HELPER
+        .getUserTotalBalance(userA, accountType, isTotalBoard);
+
+      const totalB = WALLET_HELPER
+        .getUserTotalBalance(userB, accountType, isTotalBoard);
+
+      return totalB - totalA;
+    })
+      .filter(({ id }) => usersCache.has(id))
+      .first(10);
+  }
+
+  static getLeaderboardFields(leaders, accountType, isTotalBoard, usersCache) {
+    return leaders.map((user, index) => {
+      const { username } = usersCache.get(user.id);
+      const total = WALLET_HELPER
+        .getUserTotalBalance(user, accountType, isTotalBoard);
+
+      return ({
+        name: `(${index + 1}) ${username}`,
+        value: `${currencySymbol} ${total}`,
+      });
     });
   }
 };
