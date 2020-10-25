@@ -1,5 +1,4 @@
 const { MessageEmbed } = require('discord.js');
-const tensify = require('tensify');
 
 // Economy variables.
 const { currencySymbol } = require('../config/economy.json');
@@ -8,25 +7,63 @@ const { currencySymbol } = require('../config/economy.json');
 const { MESSAGES_CONSTANTS, REGEX_CONSTANTS } = require('../constants');
 
 // Helpers.
+const WALLETS = require('./wallets');
 const MAIN_HELPER = require('./MainHelper');
 const UTILITY_HELPER = require('./UtilityHelper');
-const WALLETS = require('./wallets');
 
 // Destruct constants.
 const { USER_MENTION_REGEX } = REGEX_CONSTANTS;
 const {
+  AMOUNT_ERROR_MESSAGE,
+  INSUFFICIENT_FUNDS_ERROR_MESSAGE,
   TRANSACTION_ERROR_TITLE,
   TRANSACTION_TITLE,
   TRANSACTION_MESSAGE,
   BALANCE_MESSAGE,
-  AMOUNT_ERROR_MESSAGE,
   NO_USER_MENTIONED_ERROR_MESSAGE,
 } = MESSAGES_CONSTANTS;
 
 module.exports = class TransactionHelper {
   static makeTransaction(message, args, transactionType) {
+    const {
+      client,
+      author: {
+        username,
+        id: authorId,
+      },
+    } = message;
+
+    const category = TransactionHelper
+      .getTransactionCategory(transactionType);
+
+    let fromBalance = 0;
+    let fromAccount = 'wallet';
+    let toAccount = 'wallet';
+    let amount = UTILITY_HELPER.getArgsAmount(args);
     const userMention = args.find(arg => USER_MENTION_REGEX.test(arg));
-    const amount = UTILITY_HELPER.getArgsAmount(args);
+
+    const isDeposit = transactionType === 'deposit';
+    const isAddRemove = category === 'addRemove';
+    const isDepositWithdraw = category === 'depositWithdraw';
+    const isTransfer = category === 'transfer';
+
+    if (isDepositWithdraw || isTransfer) {
+      fromAccount = isDeposit ? 'wallet' : 'bank';
+      toAccount = isDeposit ? 'bank' : 'wallet';
+
+      const isAll = args.includes('all');
+      amount = isAll ? fromBalance : UTILITY_HELPER.getArgsAmount(args);
+    }
+
+    if (isAddRemove || isTransfer) {
+      fromAccount = UTILITY_HELPER.getArgsAccountType(args);
+    }
+
+    if (isTransfer) {
+      toAccount = 'wallet';
+    }
+
+    fromBalance = WALLETS.getBalance(authorId, fromAccount);
 
     const messageEmbed = new MessageEmbed()
       .setColor('RED')
@@ -40,46 +77,89 @@ module.exports = class TransactionHelper {
       isError = true;
     }
 
-    // Error if no user was mentioned.
-    if (!isError && !userMention) {
-      messageEmbed.setDescription(NO_USER_MENTIONED_ERROR_MESSAGE);
-      isError = true;
+    if (isDepositWithdraw || isTransfer) {
+      // Error if the user doesn't have enough money.
+      if (!isError && amount > fromBalance) {
+        messageEmbed.setDescription(
+          INSUFFICIENT_FUNDS_ERROR_MESSAGE
+            .replace('%balance%', fromBalance),
+        );
+
+        isError = true;
+      }
+    }
+
+    if (isAddRemove || isTransfer) {
+      // Error if no user was mentioned.
+      if (!isError && !userMention) {
+        messageEmbed.setDescription(NO_USER_MENTIONED_ERROR_MESSAGE);
+        isError = true;
+      }
     }
 
     if (!isError) {
-      const { client } = message;
-      const accountType = UTILITY_HELPER.getArgsAccountType(args);
+      const pastTenseTransaction = TransactionHelper
+        .getPastTenseTransaction(transactionType);
 
       const {
-        username,
+        username: recipientName,
         id: recipientId,
       } = MAIN_HELPER.getUserFromMention(userMention, client);
 
-      const transactionAmount = transactionType === 'remove' ? -amount : amount;
+      let balanceUserId;
+      let balanceUsername;
+      let receiverName;
 
-      WALLETS.add(recipientId, transactionAmount, accountType);
+      if (isAddRemove) {
+        balanceUserId = recipientId;
+        balanceUsername = recipientName;
+        receiverName = recipientName;
+        const transactionAmount = transactionType === 'remove' ? -amount : amount;
+        WALLETS.add(recipientId, transactionAmount, fromAccount);
+      }
 
-      const newBalance = WALLETS.getBalance(recipientId, accountType);
+      if (isDepositWithdraw || isTransfer) {
+        balanceUserId = authorId;
+        balanceUsername = username;
+        receiverName = isTransfer ? recipientName : username;
+        const receiverId = isTransfer ? recipientId : authorId;
+        toAccount = isDeposit ? 'bank' : toAccount;
 
-      const pastTransaction = tensify(transactionType).past_participle;
-      const toFromText = transactionType === 'remove' ? 'from' : 'to';
+        WALLETS.add(authorId, -amount, fromAccount);
+        WALLETS.add(receiverId, amount, toAccount);
+      }
+
+      const walletBalance = WALLETS.getBalance(balanceUserId, 'wallet');
+      const bankBalance = WALLETS.getBalance(balanceUserId, 'bank');
+
+      const toFromText = TransactionHelper.getToFromText(transactionType);
+
+      const isWithdraw = transactionType === 'withdraw';
+      let messageAccount = isWithdraw ? 'bank' : toAccount;
+      messageAccount = isAddRemove ? fromAccount : messageAccount;
 
       const transactionMessage = TRANSACTION_MESSAGE
-        .replace('%transaction%', pastTransaction)
+        .replace('%transaction%', pastTenseTransaction)
         .replace('%symbol%', currencySymbol)
         .replace('%amount%', amount)
         .replace('%toFrom%', toFromText)
-        .replace('%name%', `${username}'s`)
-        .replace('%type%', accountType);
+        .replace('%name%', `${receiverName}'s`)
+        .replace('%type%', messageAccount);
 
-      const balanceMessage = BALANCE_MESSAGE
-        .replace('%name%', username)
-        .replace('%type%', accountType)
+      const walletBalanceMessage = BALANCE_MESSAGE
+        .replace('%name%', balanceUsername)
+        .replace('%type%', 'wallet')
         .replace('%symbol%', currencySymbol)
-        .replace('%balance%', newBalance);
+        .replace('%balance%', walletBalance);
+
+      const bankBalanceMessage = BALANCE_MESSAGE
+        .replace('%name%', balanceUsername)
+        .replace('%type%', 'bank')
+        .replace('%symbol%', currencySymbol)
+        .replace('%balance%', bankBalance);
 
       const capitalizedPastTransaction = UTILITY_HELPER
-        .getCapitalizedString(pastTransaction);
+        .getCapitalizedString(pastTenseTransaction);
 
       const title = TRANSACTION_TITLE
         .replace('%transaction%', capitalizedPastTransaction);
@@ -88,10 +168,68 @@ module.exports = class TransactionHelper {
         .setColor('GREEN')
         .setTitle(title)
         .setDescription(
-          `${transactionMessage}\n${balanceMessage}`,
+          `${transactionMessage}\n${walletBalanceMessage}\n${bankBalanceMessage}`,
         );
     }
 
     message.channel.send(messageEmbed);
+  }
+
+  static getTransactionCategory(transactionType) {
+    let category;
+
+    switch (transactionType) {
+      case 'add':
+        category = 'addRemove';
+        break;
+      case 'remove':
+        category = 'addRemove';
+        break;
+      case 'deposit':
+        category = 'depositWithdraw';
+        break;
+      case 'withdraw':
+        category = 'depositWithdraw';
+        break;
+      default:
+        category = transactionType;
+        break;
+    }
+
+    return category;
+  }
+
+  static getPastTenseTransaction(transactionType) {
+    let pastTenseTransaction;
+
+    switch (transactionType) {
+      case 'add':
+        pastTenseTransaction = 'added';
+        break;
+      case 'remove':
+        pastTenseTransaction = 'removed';
+        break;
+      case 'deposit':
+        pastTenseTransaction = 'deposited';
+        break;
+      case 'withdraw':
+        pastTenseTransaction = 'withdrew';
+        break;
+      case 'transfer':
+        pastTenseTransaction = 'transferred';
+        break;
+      default:
+        pastTenseTransaction = transactionType;
+        break;
+    }
+
+    return pastTenseTransaction;
+  }
+
+  static getToFromText(transactionType) {
+    const isRemoveWithdraw = transactionType === 'remove'
+      || transactionType === 'withdraw';
+
+    return isRemoveWithdraw ? 'from' : 'to';
   }
 };

@@ -10,7 +10,7 @@ const {
 
 // Helpers.
 const {
-  WALLETS, MAIN_HELPER, UTILITY_HELPER,
+  WALLETS, MAIN_HELPER, UTILITY_HELPER, TRANSACTION_HELPER,
 } = require('../helpers');
 
 // Destruct constants.
@@ -29,80 +29,82 @@ const {
 module.exports = {
   ...TRANSFER_MONEY,
   execute(message, args) {
-    const {
-      client,
-      author: {
-        id: authorId,
-        username: senderName,
-      },
-    } = message;
+    TRANSACTION_HELPER.makeTransaction(message, args, 'transfer');
 
-    const transferMention = args.find(arg => USER_MENTION_REGEX.test(arg));
-    const accountType = UTILITY_HELPER.getArgsAccountType(args);
-    const currentBalance = WALLETS.getBalance(authorId, accountType);
-    const isTransferAll = args.includes('all');
-    const transferAmount = isTransferAll
-      ? currentBalance : UTILITY_HELPER.getArgsAmount(args);
+    // const {
+    //   client,
+    //   author: {
+    //     id: authorId,
+    //     username: senderName,
+    //   },
+    // } = message;
 
-    const messageEmbed = new MessageEmbed()
-      .setColor('RED')
-      .setTitle(TRANSFER_ERROR_TITLE);
+    // const transferMention = args.find(arg => USER_MENTION_REGEX.test(arg));
+    // const accountType = UTILITY_HELPER.getArgsAccountType(args);
+    // const currentBalance = WALLETS.getBalance(authorId, accountType);
+    // const isTransferAll = args.includes('all');
+    // const transferAmount = isTransferAll
+    //   ? currentBalance : UTILITY_HELPER.getArgsAmount(args);
 
-    let isError = false;
+    // const messageEmbed = new MessageEmbed()
+    //   .setColor('RED')
+    //   .setTitle(TRANSFER_ERROR_TITLE);
 
-    // Error if amount is undefined or not a number.
-    if (!transferAmount || Number.isNaN(transferAmount) || transferAmount <= 0) {
-      messageEmbed.setDescription(AMOUNT_ERROR_MESSAGE);
-      isError = true;
-    }
+    // let isError = false;
 
-    // Error if the user doesn't have enough money.
-    if (!isError && transferAmount > currentBalance) {
-      messageEmbed.setDescription(
-        INSUFFICIENT_FUNDS_ERROR_MESSAGE
-          .replace('%balance%', currentBalance),
-      );
+    // // Error if amount is undefined or not a number.
+    // if (!transferAmount || Number.isNaN(transferAmount) || transferAmount <= 0) {
+    //   messageEmbed.setDescription(AMOUNT_ERROR_MESSAGE);
+    //   isError = true;
+    // }
 
-      isError = true;
-    }
+    // // Error if the user doesn't have enough money.
+    // if (!isError && transferAmount > currentBalance) {
+    //   messageEmbed.setDescription(
+    //     INSUFFICIENT_FUNDS_ERROR_MESSAGE
+    //       .replace('%balance%', currentBalance),
+    //   );
 
-    // Error if no other user was mentioned.
-    if (!isError && !transferMention) {
-      messageEmbed.setDescription(NO_USER_MENTIONED_ERROR_MESSAGE);
-      isError = true;
-    }
+    //   isError = true;
+    // }
 
-    // Transfer the money.
-    if (!isError) {
-      const {
-        id: recipientId,
-        username: recipientName,
-      } = MAIN_HELPER.getUserFromMention(transferMention, client);
+    // // Error if no other user was mentioned.
+    // if (!isError && !transferMention) {
+    //   messageEmbed.setDescription(NO_USER_MENTIONED_ERROR_MESSAGE);
+    //   isError = true;
+    // }
 
-      WALLETS.add(authorId, -transferAmount, accountType);
-      WALLETS.add(recipientId, transferAmount);
+    // // Transfer the money.
+    // if (!isError) {
+    //   const {
+    //     id: recipientId,
+    //     username: recipientName,
+    //   } = MAIN_HELPER.getUserFromMention(transferMention, client);
 
-      const newBalance = WALLETS.getBalance(authorId, accountType);
+    //   WALLETS.add(authorId, -transferAmount, accountType);
+    //   WALLETS.add(recipientId, transferAmount);
 
-      const transferMessage = TRANSFER_MESSAGE
-        .replace('%symbol%', currencySymbol)
-        .replace('%amount%', transferAmount)
-        .replace('%name%', recipientName);
+    //   const newBalance = WALLETS.getBalance(authorId, accountType);
 
-      const currentBalanceMessage = BALANCE_MESSAGE
-        .replace('%name%', senderName)
-        .replace('%type%', accountType)
-        .replace('%symbol%', currencySymbol)
-        .replace('%balance%', newBalance);
+    //   const transferMessage = TRANSFER_MESSAGE
+    //     .replace('%symbol%', currencySymbol)
+    //     .replace('%amount%', transferAmount)
+    //     .replace('%name%', recipientName);
 
-      messageEmbed
-        .setColor('GREEN')
-        .setTitle(TRANSFER_TITLE)
-        .setDescription(
-          `${transferMessage}\n${currentBalanceMessage}`,
-        );
-    }
+    //   const currentBalanceMessage = BALANCE_MESSAGE
+    //     .replace('%name%', senderName)
+    //     .replace('%type%', accountType)
+    //     .replace('%symbol%', currencySymbol)
+    //     .replace('%balance%', newBalance);
 
-    message.channel.send(messageEmbed);
+    //   messageEmbed
+    //     .setColor('GREEN')
+    //     .setTitle(TRANSFER_TITLE)
+    //     .setDescription(
+    //       `${transferMessage}\n${currentBalanceMessage}`,
+    //     );
+    // }
+
+    // message.channel.send(messageEmbed);
   },
 };
