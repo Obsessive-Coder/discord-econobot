@@ -1,9 +1,9 @@
 const { Collection } = require('discord.js');
-const WalletHelper = require('./WalletHelper');
+const WALLET_HELPER = require('./WalletHelper');
 
 const wallets = new Collection();
 
-WalletHelper.setupAdd(wallets);
-WalletHelper.setupGetBalance(wallets);
+WALLET_HELPER.setupAdd(wallets);
+WALLET_HELPER.setupGetBalance(wallets);
 
 module.exports = wallets;

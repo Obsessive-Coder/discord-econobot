@@ -1,10 +1,11 @@
-const FLOAT_REGEX = /^\d+(\.\d{1,2})?$/;
-const USER_MENTION_REGEX = /^<@!?(\d+)>$/;
-
-module.exports.FLOAT_REGEX = FLOAT_REGEX;
-module.exports.USER_MENTION_REGEX = USER_MENTION_REGEX;
-
-module.exports = {
-  FLOAT_REGEX,
-  USER_MENTION_REGEX,
+const variables = {
+  FLOAT_REGEX: /^\d+(\.\d{1,2})?$/,
+  USER_MENTION_REGEX: /^<@!?(\d+)>$/,
 };
+
+// Export each individually.
+Object.keys(variables).forEach(key => {
+  module.exports[key] = variables[key];
+});
+
+module.exports = variables;

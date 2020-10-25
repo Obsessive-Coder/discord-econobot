@@ -11,7 +11,7 @@ const {
   USAGE_ERROR_MESSAGE,
 } = require('../constants/messages');
 
-module.exports = class MainHelper {
+module.exports = class MAIN_HELPER {
   static getCommand(commands, name) {
     let command = commands.get(name);
 

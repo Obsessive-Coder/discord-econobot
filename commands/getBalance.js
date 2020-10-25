@@ -5,22 +5,22 @@ const { currencySymbol } = require('../config/economy.json');
 
 // Constants.
 const {
-  COMMAND_CONSTANTS, MESSAGE_CONSTANTS, REGEX_CONSTANTS,
+  COMMANDS_CONSTANTS, MESSAGES_CONSTANTS, REGEX_CONSTANTS,
 } = require('../constants');
 
 // Helpers.
 const {
-  wallets, MainHelper, UtilityHelper,
+  WALLETS, MAIN_HELPER, UTILITY_HELPER,
 } = require('../helpers');
 
-const { GET_BALANCE } = COMMAND_CONSTANTS;
+const { GET_BALANCE } = COMMANDS_CONSTANTS;
 const { USER_MENTION_REGEX } = REGEX_CONSTANTS;
 const {
   GET_BALANCE_ERROR_TITLE,
   GET_BALANCE_ERROR_MESSAGE,
   GET_BALANCE_WALLET_TITLE,
   GET_BALANCE__WALLET_MESSAGE,
-} = MESSAGE_CONSTANTS;
+} = MESSAGES_CONSTANTS;
 
 module.exports = {
   ...GET_BALANCE,
@@ -33,7 +33,7 @@ module.exports = {
 
     const mentionValue = mention || `<@${author.id}>`;
 
-    const user = MainHelper.getUserFromMention(mentionValue, client);
+    const user = MAIN_HELPER.getUserFromMention(mentionValue, client);
 
     let color = 'RED';
     let title = GET_BALANCE_ERROR_TITLE;
@@ -41,8 +41,8 @@ module.exports = {
 
     if (user) {
       const { id, username } = user;
-      const balance = wallets.getBalance(id, accountType);
-      const capitalizedAccountType = UtilityHelper
+      const balance = WALLETS.getBalance(id, accountType);
+      const capitalizedAccountType = UTILITY_HELPER
         .getCapitalizedString(accountType);
 
       color = 'GREEN';

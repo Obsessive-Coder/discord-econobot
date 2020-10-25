@@ -5,24 +5,24 @@ const db = require('./models');
 
 // Configuration.
 const {
-  appConfig: { prefix, token },
+  APP_CONFIG: { prefix, token },
 } = require('./config');
 
 // Constants.
 const {
-  APP_CONSTANTS: {
+  APPLICATION_CONSTANTS: {
     READY_MESSAGE,
     COMMAND_ERROR_MESSAGE,
   },
 } = require('./constants');
 
 // Helpers.
-const { MainHelper } = require('./helpers');
+const { MAIN_HELPER } = require('./helpers');
 
 // Commands.
 const commands = require('./commands');
 
-const { wallets } = require('./helpers');
+const { WALLETS } = require('./helpers');
 
 const cooldowns = new Collection();
 const client = new Client();
@@ -33,7 +33,7 @@ client.once('ready', () => {
   db.sequelize.sync({})
     .then(async () => {
       const storedWalletBalances = await db.User.findAll();
-      storedWalletBalances.forEach(user => wallets.set(user.id, user));
+      storedWalletBalances.forEach(user => WALLETS.set(user.id, user));
 
       console.log(READY_MESSAGE);
     }).catch(error => {
@@ -51,23 +51,23 @@ client.on('message', message => {
 
   const args = content.slice(prefix.length).trim().split(/ +/);
   const commandName = args.shift().toLowerCase();
-  const command = MainHelper.getCommand(client.commands, commandName);
+  const command = MAIN_HELPER.getCommand(client.commands, commandName);
 
   if (!command) return;
 
   const { name, cooldown } = command;
 
-  const isEnoughArgs = MainHelper
+  const isEnoughArgs = MAIN_HELPER
     .handleArgsCount(message, command, args.length);
 
   if (!isEnoughArgs) return;
 
-  const isCooldown = MainHelper
+  const isCooldown = MAIN_HELPER
     .handleCooldowns(message, cooldowns, name, cooldown);
 
   if (isCooldown) return;
 
-  wallets.add(author.id, 1, 'wallet');
+  WALLETS.add(author.id, 1, 'wallet');
 
   try {
     command.execute(message, args);

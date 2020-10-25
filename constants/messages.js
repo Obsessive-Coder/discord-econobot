@@ -1,60 +1,29 @@
-const CURRENCY_SYMBOL_MESSAGE = 'Currency symbol set to:';
-const START_AMOUNT_MESSAGE = 'Start amount set to:';
-const MAX_WALLET_MESSAGE = 'Max wallet amount set to:';
-const MAX_BANK_MESSAGE = 'Max bank amount set to:';
-const NAN_ERROR_MESSAGE = 'Amount must be a number';
-const INVALID_ARGUMENT_ERROR_MESSAGE = 'Invalid or missing argument(s)';
-const USAGE_ERROR_MESSAGE = 'The proper usage would be:';
-const COOLDOWN_MESSAGE = (
-  'please wait %timeLeft% more second(s) before reusing the `%name%` command.');
-
-const ALL_HELP_TITLE = 'Here\'s a list of all my commands:';
-const ALL_HELP_DESCRIPTION = '\nYou can send `%prefix%help [command name]` to get info on a specific command!';
-const INVALID_COMMAND_MESSAGE = 'That\'s not a valid command.';
-const UNABLE_TO_DM_MESSAGE = 'it seems like I can\'t DM you! Do you have DMs disabled?';
-const SUCCESS_HELP_MESSAGE = 'I\'ve sent you a DM with the requested command(s)';
-
-const GET_BALANCE_ERROR_TITLE = 'Unknown User';
-const GET_BALANCE_ERROR_MESSAGE = 'That user was not found. Please try again';
-const GET_BALANCE_WALLET_TITLE = 'User %accountType% Balance';
-const GET_BALANCE__WALLET_MESSAGE = (
-  '%username%\'s %accountType% balance is %currencySymbol%%balance%'
-);
-
-module.exports.CURRENCY_SYMBOL_MESSAGE = CURRENCY_SYMBOL_MESSAGE;
-module.exports.START_AMOUNT_MESSAGE = START_AMOUNT_MESSAGE;
-module.exports.MAX_WALLET_MESSAGE = MAX_WALLET_MESSAGE;
-module.exports.MAX_BANK_MESSAGE = MAX_BANK_MESSAGE;
-module.exports.NAN_ERROR_MESSAGE = NAN_ERROR_MESSAGE;
-module.exports.INVALID_ARGUMENT_ERROR_MESSAGE = INVALID_ARGUMENT_ERROR_MESSAGE;
-module.exports.USAGE_ERROR_MESSAGE = USAGE_ERROR_MESSAGE;
-module.exports.COOLDOWN_MESSAGE = COOLDOWN_MESSAGE;
-module.exports.ALL_HELP_TITLE = ALL_HELP_TITLE;
-module.exports.ALL_HELP_DESCRIPTION = ALL_HELP_DESCRIPTION;
-module.exports.INVALID_COMMAND_MESSAGE = INVALID_COMMAND_MESSAGE;
-module.exports.UNABLE_TO_DM_MESSAGE = UNABLE_TO_DM_MESSAGE;
-module.exports.SUCCESS_HELP_MESSAGE = SUCCESS_HELP_MESSAGE;
-module.exports.GET_BALANCE_ERROR_TITLE = GET_BALANCE_ERROR_TITLE;
-module.exports.GET_BALANCE_ERROR_MESSAGE = GET_BALANCE_ERROR_MESSAGE;
-module.exports.GET_BALANCE_WALLET_TITLE = GET_BALANCE_WALLET_TITLE;
-module.exports.GET_BALANCE__WALLET_MESSAGE = GET_BALANCE__WALLET_MESSAGE;
-
-module.exports = {
-  CURRENCY_SYMBOL_MESSAGE,
-  START_AMOUNT_MESSAGE,
-  MAX_WALLET_MESSAGE,
-  MAX_BANK_MESSAGE,
-  NAN_ERROR_MESSAGE,
-  INVALID_ARGUMENT_ERROR_MESSAGE,
-  USAGE_ERROR_MESSAGE,
-  COOLDOWN_MESSAGE,
-  ALL_HELP_TITLE,
-  ALL_HELP_DESCRIPTION,
-  INVALID_COMMAND_MESSAGE,
-  UNABLE_TO_DM_MESSAGE,
-  SUCCESS_HELP_MESSAGE,
-  GET_BALANCE_ERROR_TITLE,
-  GET_BALANCE_ERROR_MESSAGE,
-  GET_BALANCE_WALLET_TITLE,
-  GET_BALANCE__WALLET_MESSAGE,
+const variables = {
+  CURRENCY_SYMBOL_MESSAGE: 'Currency symbol set to:',
+  START_AMOUNT_MESSAGE: 'Start amount set to:',
+  MAX_WALLET_MESSAGE: 'Max wallet amount set to:',
+  MAX_BANK_MESSAGE: 'Max bank amount set to:',
+  NAN_ERROR_MESSAGE: 'Amount must be a number',
+  INVALID_ARGUMENT_ERROR_MESSAGE: 'Invalid or missing argument(s)',
+  USAGE_ERROR_MESSAGE: 'The proper usage would be:',
+  COOLDOWN_MESSAGE:
+    'please wait %timeLeft% more second(s) before reusing the `%name%` command.',
+  ALL_HELP_TITLE: 'Here\'s a list of all my commands:',
+  ALL_HELP_DESCRIPTION:
+    '\nYou can send `%prefix%help [command name]` to get info on a specific command!',
+  INVALID_COMMAND_MESSAGE: 'That\'s not a valid command.',
+  UNABLE_TO_DM_MESSAGE: 'it seems like I can\'t DM you! Do you have DMs disabled?',
+  SUCCESS_HELP_MESSAGE: 'I\'ve sent you a DM with the requested command(s)',
+  GET_BALANCE_ERROR_TITLE: 'Unknown User',
+  GET_BALANCE_ERROR_MESSAGE: 'That user was not found. Please try again',
+  GET_BALANCE_WALLET_TITLE: 'User %accountType% Balance',
+  GET_BALANCE__WALLET_MESSAGE:
+    '%username%\'s %accountType% balance is %currencySymbol%%balance%',
 };
+
+// Export each individually.
+Object.keys(variables).forEach(key => {
+  module.exports[key] = variables[key];
+});
+
+module.exports = variables;

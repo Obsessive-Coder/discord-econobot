@@ -1,19 +1,28 @@
-const APP_CONSTANTS = require('./application');
-const CONFIG_COMMAND_CONSTANTS = require('./configCommands');
-const COMMAND_CONSTANTS = require('./commands');
-const MESSAGE_CONSTANTS = require('./messages');
-const REGEX_CONSTANTS = require('./regex');
+const { readdirSync } = require('fs');
+const { basename, join } = require('path');
+const UTILITY_HELPER = require('../helpers/UtilityHelper');
 
-module.exports.APP_CONSTANTS = APP_CONSTANTS;
-module.exports.CONFIG_COMMAND_CONSTANTS = CONFIG_COMMAND_CONSTANTS;
-module.exports.COMMAND_CONSTANTS = COMMAND_CONSTANTS;
-module.exports.MESSAGE_CONSTANTS = MESSAGE_CONSTANTS;
-module.exports.REGEX_CONSTANTS = REGEX_CONSTANTS;
+const fileName = basename(__filename);
 
-module.exports = {
-  APP_CONSTANTS,
-  CONFIG_COMMAND_CONSTANTS,
-  COMMAND_CONSTANTS,
-  MESSAGE_CONSTANTS,
-  REGEX_CONSTANTS,
-};
+const files = readdirSync(__dirname)
+  .filter(file => (
+    file.indexOf('.') !== 0
+    && file !== fileName
+    && file.slice(-3) === '.js'
+  ));
+
+const exportVariables = {};
+
+for (let i = 0; i < files.length; i++) {
+  const file = files[i];
+  const name = file.split('.js')[0];
+  const upperSnakeName = UTILITY_HELPER.getUpperCaseSnakeCase(name);
+  const finalName = `${upperSnakeName}_CONSTANTS`;
+
+  const constants = require(join(__dirname, file));
+
+  exportVariables[finalName] = constants;
+  module.exports[finalName] = constants;
+}
+
+module.exports = exportVariables;

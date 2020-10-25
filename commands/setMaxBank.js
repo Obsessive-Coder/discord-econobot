@@ -1,23 +1,23 @@
 // Constants.
 const {
-  CONFIG_COMMAND_CONSTANTS, MESSAGE_CONSTANTS,
+  CONFIG_COMMANDS_CONSTANTS, MESSAGES_CONSTANTS,
 } = require('../constants');
 
-const { SET_MAX_BANK, MAX_BANK_FIELD } = CONFIG_COMMAND_CONSTANTS;
-const { MAX_BANK_MESSAGE } = MESSAGE_CONSTANTS;
+const { SET_MAX_BANK, MAX_BANK_FIELD } = CONFIG_COMMANDS_CONSTANTS;
+const { MAX_BANK_MESSAGE } = MESSAGES_CONSTANTS;
 
 // Default config value.
 const { maxBankAmount } = require('../config/defaultEconomy.json');
 
 // Helpers.
-const { ConfigHelper } = require('../helpers');
+const { CONFIG_HELPER } = require('../helpers');
 
 module.exports = {
   ...SET_MAX_BANK,
   execute(message, [amount]) {
     const value = amount || maxBankAmount;
 
-    ConfigHelper.saveConfig(
+    CONFIG_HELPER.saveConfig(
       message, MAX_BANK_FIELD, value, MAX_BANK_MESSAGE,
     );
   },

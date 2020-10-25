@@ -1,22 +1,27 @@
-const wallets = require('./wallets');
-const ConfigHelper = require('./ConfigHelper');
-const MainHelper = require('./MainHelper');
-const HelpHelper = require('./HelpHelper');
-const WalletHelper = require('./WalletHelper');
-const UtilityHelper = require('./UtilityHelper');
+const { readdirSync } = require('fs');
+const { basename, join } = require('path');
+const UTILITY_HELPER = require('./UtilityHelper');
 
-module.exports.wallets = wallets;
-module.exports.ConfigHelper = ConfigHelper;
-module.exports.MainHelper = MainHelper;
-module.exports.HelpHelper = HelpHelper;
-module.exports.WalletHelper = WalletHelper;
-module.exports.UtilityHelper = UtilityHelper;
+const fileName = basename(__filename);
 
-module.exports = {
-  wallets,
-  ConfigHelper,
-  MainHelper,
-  HelpHelper,
-  WalletHelper,
-  UtilityHelper,
-};
+const files = readdirSync(__dirname)
+  .filter(file => (
+    file.indexOf('.') !== 0
+    && file !== fileName
+    && file.slice(-3) === '.js'
+  ));
+
+const exportVariables = {};
+
+for (let i = 0; i < files.length; i++) {
+  const file = files[i];
+  const name = file.split('.js')[0];
+  const finalName = UTILITY_HELPER.getUpperCaseSnakeCase(name);
+
+  const helper = require(join(__dirname, file));
+
+  exportVariables[finalName] = helper;
+  module.exports[finalName] = helper;
+}
+
+module.exports = exportVariables;

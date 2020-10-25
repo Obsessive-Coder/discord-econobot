@@ -1,16 +1,16 @@
 // Constants.
 const {
-  COMMAND_CONSTANTS, MESSAGE_CONSTANTS,
+  COMMANDS_CONSTANTS, MESSAGES_CONSTANTS,
 } = require('../constants');
 
-const { ADD_MONEY } = COMMAND_CONSTANTS;
-const { INVALID_ARGUMENT_ERROR_MESSAGE } = MESSAGE_CONSTANTS;
+const { ADD_MONEY } = COMMANDS_CONSTANTS;
+const { INVALID_ARGUMENT_ERROR_MESSAGE } = MESSAGES_CONSTANTS;
 
 // Default config value.
-const { currencySymbol } = require('../config/defaultEconomy.json');
+const { currencySymbol } = require('../config/defaultEconomy');
 
 // Helpers.
-const { ConfigHelper } = require('../helpers');
+const { Config_Helper } = require('../helpers');
 
 module.exports = {
   ...ADD_MONEY,

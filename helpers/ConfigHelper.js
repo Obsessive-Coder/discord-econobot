@@ -12,11 +12,11 @@ const { FLOAT_REGEX } = require('../constants/regex');
 // Config file.
 
 const {
-  economyConfig,
-  defaultEconomyConfig: { currencySymbol },
+  ECONOMY_CONFIG,
+  DEFAULT_ECONOMY_CONFIG: { currencySymbol },
 } = require('../config');
 
-module.exports = class ConfigHelper {
+module.exports = class CONFIG_HELPER {
   static saveConfig(message, configField, value, successMessage) {
     let parsedValue = value;
     let valuePrepend = '';
@@ -28,7 +28,7 @@ module.exports = class ConfigHelper {
         return message.reply(NAN_ERROR_MESSAGE);
       }
 
-      valuePrepend = economyConfig.currencySymbol || currencySymbol;
+      valuePrepend = ECONOMY_CONFIG.currencySymbol || currencySymbol;
     }
 
     if (!value) {
@@ -36,10 +36,10 @@ module.exports = class ConfigHelper {
     }
 
     // Set the value.
-    economyConfig[configField] = parsedValue;
+    ECONOMY_CONFIG[configField] = parsedValue;
 
     // Convert to JSON.
-    const fileData = JSON.stringify(economyConfig, null, 2);
+    const fileData = JSON.stringify(ECONOMY_CONFIG, null, 2);
 
     return writeFile(join(__dirname, '../config/economy.json'), fileData, error => {
       if (error) {

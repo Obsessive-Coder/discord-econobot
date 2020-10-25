@@ -2,15 +2,15 @@ const { MessageEmbed } = require('discord.js');
 
 // Constants.
 const {
-  COMMAND_CONSTANTS: { HELP },
-  MESSAGE_CONSTANTS: {
+  COMMANDS_CONSTANTS: { HELP },
+  MESSAGES_CONSTANTS: {
     UNABLE_TO_DM_MESSAGE,
     SUCCESS_HELP_MESSAGE,
   },
 } = require('../constants');
 
 // Helpers.
-const { HelpHelper, MainHelper } = require('../helpers');
+const { HELP_HELPER, MAIN_HELPER } = require('../helpers');
 
 module.exports = {
   ...HELP,
@@ -20,11 +20,11 @@ module.exports = {
     let helpMessage = new MessageEmbed().setColor('BLUE');
 
     if (!commandName) {
-      helpMessage = HelpHelper.getAllHelpMessage(commands);
+      helpMessage = HELP_HELPER.getAllHelpMessage(commands);
     } else {
       const lowerName = commandName.toLowerCase();
-      const command = MainHelper.getCommand(commands, lowerName);
-      helpMessage = HelpHelper.getCommandHelpMessage(command);
+      const command = MAIN_HELPER.getCommand(commands, lowerName);
+      helpMessage = HELP_HELPER.getCommandHelpMessage(command);
     }
 
     helpMessage.setColor('BLUE');
