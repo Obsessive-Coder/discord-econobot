@@ -36,7 +36,7 @@ client.once('ready', () => {
 
       LOGGER.log('info', READY_MESSAGE);
     }).catch(error => {
-      LOGGER.log('error', `${DB_SYNC_ERROR_MESSAGE}\n${error}`);
+      LOGGER.log('error', `${DB_SYNC_ERROR_MESSAGE} - ${error}`);
     });
 });
 
