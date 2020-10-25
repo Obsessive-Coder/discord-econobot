@@ -21,7 +21,7 @@ const {
   GET_BALANCE_ERROR_TITLE,
   GET_BALANCE_ERROR_MESSAGE,
   GET_BALANCE_TITLE,
-  GET_BALANCE_MESSAGE,
+  BALANCE_MESSAGE,
 } = MESSAGES_CONSTANTS;
 
 module.exports = {
@@ -50,10 +50,10 @@ module.exports = {
       title = GET_BALANCE_TITLE
         .replace('%accountType%', capitalizedAccountType);
 
-      description = GET_BALANCE_MESSAGE
-        .replace('%username%', username)
-        .replace('%accountType%', accountType)
-        .replace('%currencySymbol%', currencySymbol)
+      description = BALANCE_MESSAGE
+        .replace('%name%', username)
+        .replace('%type%', accountType)
+        .replace('%symbol%', currencySymbol)
         .replace('%balance%', balance);
     }
 

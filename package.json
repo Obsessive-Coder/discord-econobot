@@ -17,6 +17,7 @@
     "dotenv": "^8.2.0",
     "sequelize": "^6.3.5",
     "sqlite3": "^5.0.0",
+    "tensify": "^0.0.4",
     "uuid": "^8.3.1",
     "winston": "^3.3.3"
   },

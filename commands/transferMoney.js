@@ -22,7 +22,7 @@ const {
   TRANSFER_INSUFFICIENT_FUNDS_ERROR_MESSAGE,
   TRANSFER_TITLE,
   TRANSFER_MESSAGE,
-  GET_BALANCE_MESSAGE,
+  BALANCE_MESSAGE,
   NO_USER_MENTIONED_ERROR_MESSAGE,
 } = MESSAGES_CONSTANTS;
 
@@ -89,10 +89,10 @@ module.exports = {
         .replace('%amount%', transferAmount)
         .replace('%username%', recipientName);
 
-      const currentBalanceMessage = GET_BALANCE_MESSAGE
+      const currentBalanceMessage = BALANCE_MESSAGE
         .replace('%username%', senderName)
-        .replace('%accountType%', accountType)
-        .replace('%currencySymbol%', currencySymbol)
+        .replace('%type%', accountType)
+        .replace('%symbol%', currencySymbol)
         .replace('%balance%', newBalance);
 
       messageEmbed

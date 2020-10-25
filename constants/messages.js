@@ -17,23 +17,23 @@ const variables = {
   GET_BALANCE_ERROR_TITLE: 'Unknown User',
   GET_BALANCE_ERROR_MESSAGE: 'That user was not found. Please try again',
   GET_BALANCE_TITLE: 'User %accountType% Balance',
-  GET_BALANCE_MESSAGE:
-    '%username%\'s %accountType% balance is %currencySymbol%%balance%',
-  TRANSFER_ERROR_TITLE: 'Transfer Error',
-  AMOUNT_ERROR_MESSAGE: 'Amount must be a number greater than 0.',
-  TRANSFER_INSUFFICIENT_FUNDS_ERROR_MESSAGE: 'Insufficient funds. You only have %balance%.',
-  TRANSFER_TITLE: 'Transferred Money',
-  TRANSFER_MESSAGE: 'Successfully transferred %currencySymbol%%amount% to %username%.',
-  ADD_MONEY_ERROR_TITLE: 'Add Money Error',
-  ADD_MONEY_TITLE: 'Added Money',
-  ADD_MONEY_MESSAGE: 'Successfully added %symbol%%amount% to %name%\'s %type% balance',
-  REMOVE_MONEY_ERROR_TITLE: 'Remove Money Error',
-  REMOVE_MONEY_TITLE: 'Removed Money',
-  REMOVE_MONEY_MESSAGE: 'Successfully removed %symbol%%amount% from %name%\'s %type% balance',
-  NO_USER_MENTIONED_ERROR_MESSAGE: 'No user was mentioned.',
+  BALANCE_MESSAGE: '%name%\'s %type% balance is %symbol%%balance%',
   LEADERBOARD_TITLE: '%type% Funds Leaderboard',
   UNKNOWN_COMMAND_ERROR_MESSAGE: '`%prefix%%command%` is an unknown command.',
   DB_SYNC_ERROR_MESSAGE: 'Something went wrong with syncing the database.',
+
+  TRANSACTION_ERROR_TITLE: 'Transaction Error',
+  TRANSACTION_TITLE: '%transaction% Money',
+  TRANSACTION_MESSAGE:
+    'Successfully %transaction% %symbol%%amount% %toFrom% %name%\'s %type% balance.',
+
+  TRANSFER_ERROR_TITLE: 'Transfer Error',
+  TRANSFER_TITLE: 'Transferred Money',
+  TRANSFER_MESSAGE: 'Successfully transferred %currencySymbol%%amount% to %username%.',
+
+  TRANSFER_INSUFFICIENT_FUNDS_ERROR_MESSAGE: 'Insufficient funds. You only have %balance%.',
+  AMOUNT_ERROR_MESSAGE: 'Amount must be a number greater than 0.',
+  NO_USER_MENTIONED_ERROR_MESSAGE: 'No user was mentioned.',
 };
 
 // Export each individually.
