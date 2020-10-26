@@ -6,21 +6,26 @@ const { prefix } = require('../config/app');
 // Constants.
 const {
   ALL_HELP_TITLE,
+  HELP_LEGEND,
+  HELP_EXAMPLE,
   ALL_HELP_DESCRIPTION,
   INVALID_COMMAND_MESSAGE,
 } = require('../constants/messages');
 
 module.exports = class HelpHelper {
   static getAllHelpMessage(commands) {
+    const description = `${ALL_HELP_DESCRIPTION}\n${HELP_LEGEND}${HELP_EXAMPLE}`
+      .replace(/%prefix%/g, prefix);
+
     return new MessageEmbed()
       .setTitle(ALL_HELP_TITLE)
       .addFields(
         commands.map(({ name, usage }) => ({
           name,
-          value: `${prefix}${name} ${usage}`,
+          value: `\`${prefix}${name} ${usage}\``,
         })),
       )
-      .setDescription(ALL_HELP_DESCRIPTION.replace('%prefix%', prefix));
+      .setDescription(description);
   }
 
   static getCommandHelpMessage(command) {
@@ -37,23 +42,24 @@ module.exports = class HelpHelper {
 
     helpMessage.setTitle(`Name: ${name}`);
 
-    if (description) {
-      helpMessage.setDescription(description);
-    }
+    const fullDescription = `${description}\n${HELP_LEGEND}`
+      .replace(/%prefix%/g, prefix);
+
+    helpMessage.setDescription(fullDescription);
 
     const fields = [];
+
+    if (usage) {
+      fields.push({
+        name: 'Usage',
+        value: `\`${prefix}${name} ${usage}\``,
+      });
+    }
 
     if (aliases) {
       fields.push({
         name: 'Aliases',
         value: aliases.join('\n'),
-      });
-    }
-
-    if (usage) {
-      fields.push({
-        name: 'Usage',
-        value: `${prefix}${name} ${usage}`,
       });
     }
 

@@ -17,7 +17,7 @@ module.exports = {
   execute(message, [commandName]) {
     const { commands } = message.client;
 
-    let helpMessage = new MessageEmbed().setColor('BLUE');
+    let helpMessage = new MessageEmbed();
 
     if (!commandName) {
       helpMessage = HELP_HELPER.getAllHelpMessage(commands);

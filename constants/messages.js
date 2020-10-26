@@ -9,6 +9,8 @@ const variables = {
   COOLDOWN_MESSAGE:
     'please wait %timeLeft% more second(s) before reusing the `%name%` command.',
   ALL_HELP_TITLE: 'Here\'s a list of all my commands:',
+  HELP_LEGEND: '\n**LEGEND**\n%prefix% - Command Prefix\n[] - Optional Argument\n<> - Required Argument\n<option1 | option2> - choose one of these arguments\n **Do not included brackets**',
+  HELP_EXAMPLE: '\nExample - `%prefix%deposit-money 750 bank`',
   ALL_HELP_DESCRIPTION:
     '\nYou can send `%prefix%help [command name]` to get info on a specific command!',
   INVALID_COMMAND_MESSAGE: 'That\'s not a valid command.',
