@@ -73,30 +73,6 @@ module.exports = class UTILITY_HELPER {
     });
   }
 
-  static getTransactionCategory(transactionType) {
-    let category;
-
-    switch (transactionType) {
-      case 'add':
-        category = 'addRemove';
-        break;
-      case 'remove':
-        category = 'addRemove';
-        break;
-      case 'deposit':
-        category = 'depositWithdraw';
-        break;
-      case 'withdraw':
-        category = 'depositWithdraw';
-        break;
-      default:
-        category = transactionType;
-        break;
-    }
-
-    return category;
-  }
-
   static getPastTenseTransaction(transactionType) {
     let pastTenseTransaction;
 
@@ -129,26 +105,5 @@ module.exports = class UTILITY_HELPER {
       || transactionType === 'withdraw';
 
     return isRemoveWithdraw ? 'from' : 'to';
-  }
-
-  static getDescriptionAccount(type, args) {
-    let account;
-
-    switch (type) {
-      case 'transfer':
-        account = 'wallet';
-        break;
-      case 'withdraw':
-        account = 'wallet';
-        break;
-      case 'deposit':
-        account = 'bank';
-        break;
-      default:
-        account = UTILITY_HELPER.getArgsAccountType(args);
-        break;
-    }
-
-    return account;
   }
 };

@@ -1,6 +1,6 @@
 // Helpers.
 const {
-  NEW_TRANSACTION_HELPER, UTILITY_HELPER, WALLETS,
+  TRANSACTION_HELPER, UTILITY_HELPER, WALLETS,
 } = require('../helpers');
 
 module.exports = class AddRemoveHelper {
@@ -13,7 +13,7 @@ module.exports = class AddRemoveHelper {
     const isAll = args.includes('all');
     this.amount = isAll ? this.balance : UTILITY_HELPER.getArgsAmount(args);
 
-    this.transaction = new NEW_TRANSACTION_HELPER(this.amount, type);
+    this.transaction = new TRANSACTION_HELPER(this.amount, type);
 
     this.makeTransaction();
   }
