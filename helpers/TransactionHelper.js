@@ -19,6 +19,7 @@ const {
   TRANSACTION_MESSAGE,
   BALANCE_MESSAGE,
   NO_USER_MENTIONED_ERROR_MESSAGE,
+  INVALID_ROLE_MESSAGE,
 } = MESSAGES_CONSTANTS;
 
 module.exports = class TransactionHelper {
@@ -31,6 +32,23 @@ module.exports = class TransactionHelper {
     this.messageEmbed = new MessageEmbed()
       .setColor('RED')
       .setTitle(TRANSACTION_ERROR_TITLE);
+  }
+
+  validateRole(member, guild, roleName) {
+    const leaderRole = guild.roles.cache
+      .find(role => role.name === roleName);
+
+    const roleId = leaderRole ? leaderRole.id : undefined;
+    // eslint-disable-next-line no-underscore-dangle
+    const userRoleIds = member._roles;
+
+    const isUserRole = userRoleIds.includes(roleId);
+
+    if (!isUserRole) {
+      const description = INVALID_ROLE_MESSAGE.replace('%role%', roleName);
+      this.messageEmbed.setDescription(description);
+      this.isError = true;
+    }
   }
 
   validateAmount() {

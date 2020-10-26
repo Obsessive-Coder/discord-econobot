@@ -10,14 +10,14 @@ const { START_AMOUNT_MESSAGE } = MESSAGES_CONSTANTS;
 const { startAmount } = require('../config/defaultEconomy.json');
 
 // Helpers.
-const { CONFIG_HELPER } = require('../helpers');
+const { CONFIG_HANDLER } = require('../commandHandlers');
 
 module.exports = {
   ...SET_START_AMOUNT,
   execute(message, [amount]) {
     const value = amount || startAmount;
 
-    CONFIG_HELPER.saveConfig(
+    CONFIG_HANDLER.saveConfig(
       message, START_AMOUNT_FIELD, value, START_AMOUNT_MESSAGE,
     );
   },

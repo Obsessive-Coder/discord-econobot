@@ -10,14 +10,14 @@ const { MAX_WALLET_MESSAGE } = MESSAGES_CONSTANTS;
 const { maxWalletAmount } = require('../config/defaultEconomy.json');
 
 // Helpers.
-const { CONFIG_HELPER } = require('../helpers');
+const { CONFIG_HANDLER } = require('../commandHandlers');
 
 module.exports = {
   ...SET_MAX_WALLET,
   execute(message, [amount]) {
     const value = amount || maxWalletAmount;
 
-    CONFIG_HELPER.saveConfig(
+    CONFIG_HANDLER.saveConfig(
       message, MAX_WALLET_FIELD, value, MAX_WALLET_MESSAGE,
     );
   },

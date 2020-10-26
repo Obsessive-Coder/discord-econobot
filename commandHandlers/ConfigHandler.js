@@ -6,6 +6,7 @@ const { MessageEmbed } = require('discord.js');
 const { CURRENCY_SYMBOL_FIELD } = require('../constants/configCommands');
 const {
   NAN_ERROR_MESSAGE, INVALID_ARGUMENT_ERROR_MESSAGE,
+  INVALID_ROLE_MESSAGE,
 } = require('../constants/messages');
 const { FLOAT_REGEX } = require('../constants/regex');
 
@@ -16,8 +17,12 @@ const {
   DEFAULT_ECONOMY_CONFIG: { currencySymbol },
 } = require('../config');
 
-module.exports = class CONFIG_HELPER {
+module.exports = class CONFIG_HANDLER {
   static saveConfig(message, configField, value, successMessage) {
+    const isValidRole = CONFIG_HANDLER.validateRole(message, 'Leadership');
+
+    if (!isValidRole) return isValidRole;
+
     let parsedValue = value;
     let valuePrepend = '';
     if (configField !== CURRENCY_SYMBOL_FIELD) {
@@ -56,5 +61,31 @@ module.exports = class CONFIG_HELPER {
 
       return message.channel.send(embed);
     });
+  }
+
+  static validateRole(message, roleName) {
+    const { channel, member, guild } = message;
+    const leaderRole = guild.roles.cache
+      .find(role => role.name === roleName);
+
+    const roleId = leaderRole ? leaderRole.id : undefined;
+    // eslint-disable-next-line no-underscore-dangle
+    const userRoleIds = member._roles;
+
+    const isUserRole = userRoleIds.includes(roleId);
+
+    if (!isUserRole) {
+      const description = INVALID_ROLE_MESSAGE.replace('%role%', roleName);
+      const embed = new MessageEmbed()
+        .setColor('RED')
+        .setTitle('Error')
+        .setDescription(description);
+
+      channel.send(embed);
+
+      return false;
+    }
+
+    return true;
   }
 };

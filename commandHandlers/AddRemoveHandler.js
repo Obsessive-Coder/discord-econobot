@@ -18,7 +18,12 @@ module.exports = class AddRemoveHelper {
   }
 
   makeTransaction() {
-    this.transaction.validateAmount();
+    const { member, guild } = this.message;
+    this.transaction.validateRole(member, guild, 'Leadership');
+
+    if (!this.transaction.isError) {
+      this.transaction.validateAmount();
+    }
 
     if (!this.transaction.isError) {
       this.transaction.validateMention(this.userMention);

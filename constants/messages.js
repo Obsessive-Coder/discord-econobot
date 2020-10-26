@@ -31,6 +31,8 @@ const variables = {
     'Insufficient funds. You only have %balance% in your %account%.',
   AMOUNT_ERROR_MESSAGE: 'Amount must be a number greater than 0.',
   NO_USER_MENTIONED_ERROR_MESSAGE: 'No user was mentioned.',
+  INVALID_ROLE_MESSAGE:
+    'You do not have the correct role to make this command.\nSpeak to an admin to get access to the `%role%` role.',
 };
 
 // Export each individually.

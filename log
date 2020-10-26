@@ -760,3 +760,124 @@
 [[34mINFO[39m] - Economy bot is ready.
 [[34mINFO[39m] - Economy bot is ready.
 [[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[31mERROR[39m] - There was an error trying to execute the command! - TypeError: message.member.roles.find is not a function
+[[34mINFO[39m] - Economy bot is ready.
+[[31mERROR[39m] - There was an error trying to execute the command! - TypeError: message.member.roles.some is not a function
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[31mERROR[39m] - There was an error trying to execute the command! - TypeError: message.member.roles.guild.roles.find is not a function
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[31mERROR[39m] - There was an error trying to execute the command! - TypeError: this.transaction.validateRole is not a function
+[[34mINFO[39m] - Economy bot is ready.
+[[31mERROR[39m] - There was an error trying to execute the command! - TypeError: Cannot read property 'validateRole' of undefined
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[31mERROR[39m] - There was an error trying to execute the command! - TypeError: Cannot read property 'id' of undefined
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[31mERROR[39m] - There was an error trying to execute the command! - TypeError: Cannot read property 'id' of undefined
+[[31mERROR[39m] - There was an error trying to execute the command! - TypeError: Cannot read property 'id' of undefined
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[31mERROR[39m] - There was an error trying to execute the command! - TypeError: Cannot read property 'setDescription' of undefined
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[31mERROR[39m] - There was an error trying to execute the command! - TypeError: this.isError is not a function
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[31mERROR[39m] - There was an error trying to execute the command! - TypeError: Cannot destructure property 'channel' of 'this.message' as it is undefined.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.

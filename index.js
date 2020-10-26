@@ -45,9 +45,9 @@ client.on('message', message => {
   if (!content.startsWith(prefix) || author.bot) return;
 
   // Delete the command message.
-  if (channel.type !== 'dm') {
-    channel.messages.delete(message);
-  }
+  // if (channel.type !== 'dm') {
+  //   channel.messages.delete(message);
+  // }
 
   // Get the command and its arguments.
   const args = content.slice(prefix.length).trim().split(/ +/);
