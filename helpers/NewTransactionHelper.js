@@ -4,15 +4,13 @@ const { MessageEmbed } = require('discord.js');
 const { currencySymbol } = require('../config/economy.json');
 
 // Constants.
-const { MESSAGES_CONSTANTS, REGEX_CONSTANTS } = require('../constants');
+const { MESSAGES_CONSTANTS } = require('../constants');
 
 // Helpers.
 const WALLETS = require('./wallets');
-const MAIN_HELPER = require('./MainHelper');
 const UTILITY_HELPER = require('./UtilityHelper');
 
 // Destruct constants.
-const { USER_MENTION_REGEX } = REGEX_CONSTANTS;
 const {
   AMOUNT_ERROR_MESSAGE,
   INSUFFICIENT_FUNDS_ERROR_MESSAGE,
@@ -44,12 +42,13 @@ module.exports = class TransactionHelper {
     }
   }
 
-  validateSufficientBalance(balance) {
+  validateSufficientBalance(balance, account) {
     // Error if the user doesn't have enough money.
     if (this.amount > balance) {
       this.messageEmbed.setDescription(
         INSUFFICIENT_FUNDS_ERROR_MESSAGE
-          .replace('%balance%', balance),
+          .replace('%balance%', balance)
+          .replace('%account%', account),
       );
 
       this.isError = true;
@@ -90,6 +89,21 @@ module.exports = class TransactionHelper {
       .replace('%type%', account);
   }
 
+  getMessages(userId, username, account) {
+    const transactionMessage = this.getTransactionMessage(username, account);
+
+    const walletBalance = WALLETS.getBalance(userId, 'wallet');
+    const bankBalance = WALLETS.getBalance(userId, 'bank');
+
+    const walletBalanceMessage = TransactionHelper
+      .getBalanceMessage(username, 'wallet', walletBalance);
+
+    const bankBalanceMessage = TransactionHelper
+      .getBalanceMessage(username, 'bank', bankBalance);
+
+    return [transactionMessage, walletBalanceMessage, bankBalanceMessage];
+  }
+
   static getBalanceMessage(username, account, balance) {
     return BALANCE_MESSAGE
       .replace('%name%', username)
@@ -98,57 +112,13 @@ module.exports = class TransactionHelper {
       .replace('%balance%', balance);
   }
 
-  buildMessage(username, account, balance) {
+  buildMessage(userId, username, account) {
     const messageTitle = this.getMessageTitle();
-
-    const transactionMessage = this.getTransactionMessage(username, account);
-
-    const balanceMessage = TransactionHelper
-      .getBalanceMessage(username, account, balance);
+    const messages = this.getMessages(userId, username, account);
 
     this.messageEmbed
       .setColor('GREEN')
       .setTitle(messageTitle)
-      .setDescription(`${transactionMessage}\n${balanceMessage}`);
+      .setDescription(messages.join('\n'));
   }
-
-  /**
-   * Title
-   * 1. Capitalized past tense transaction type.
-  */
-
-  /**
-   * Description
-   * 1. Lowercase past tense transaction type.
-   * 2. Transaction amount.
-   *
-   * 3. To/from text.
-   *  If add, deposit, or transfer...
-   *    - To/from text is 'to'.
-   *  If remove or withdraw...
-   *    - To/from text is 'from'.
-   *
-   * 4. Username.
-   *  If add, remove, or transfer...
-   *    - Username is mentioned user.
-   *  If deposit or withdraw...
-   *    - Username is author.
-   *
-   * 5. Account.
-   *  If transfer or withdraw...
-   *    - Account is wallet.
-   *  If deposit...
-   *    - Account is bank.
-   *  If add or remove...
-   *    - Account is args account.
-  */
-
-  /**
-   * Balances
-   * If add or remove...
-   *  - Mentioned user's name and balance
-   *
-   * If deposit, withdraw, or transfer...
-   *  - Author's name and balance.
-  */
 };

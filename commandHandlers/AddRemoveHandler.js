@@ -1,14 +1,7 @@
-// Constants.
-const { COMMANDS_CONSTANTS } = require('../constants');
-
 // Helpers.
 const {
-  TRANSACTION_HELPER, NEW_TRANSACTION_HELPER,
-  MAIN_HELPER, UTILITY_HELPER, WALLETS,
+  NEW_TRANSACTION_HELPER, MAIN_HELPER, UTILITY_HELPER, WALLETS,
 } = require('../helpers');
-
-// Destruct constants.
-const { ADD_MONEY } = COMMANDS_CONSTANTS;
 
 module.exports = class AddRemoveHelper {
   constructor(message, args, type) {
@@ -31,17 +24,15 @@ module.exports = class AddRemoveHelper {
       this.transaction.validateMention(this.userMention);
     }
 
-    const { client } = this.message;
+    if (!this.transaction.isError) {
+      const { client } = this.message;
 
-    const {
-      id, username,
-    } = MAIN_HELPER.getUserFromMention(this.userMention, client);
+      const { id, username } = MAIN_HELPER
+        .getUserFromMention(this.userMention, client);
 
-    WALLETS.add(id, this.amount, this.account);
-
-    const balance = WALLETS.getBalance(id, this.account);
-
-    this.transaction.buildMessage(username, this.account, balance);
+      WALLETS.add(id, this.amount, this.account);
+      this.transaction.buildMessage(id, username, this.account);
+    }
 
     this.message.channel.send(this.transaction.messageEmbed);
   }

@@ -25,7 +25,8 @@ const variables = {
   TRANSACTION_TITLE: '%transaction% Money',
   TRANSACTION_MESSAGE:
     'Successfully %transaction% %symbol%%amount% %toFrom% %name% %type%.',
-  INSUFFICIENT_FUNDS_ERROR_MESSAGE: 'Insufficient funds. You only have %balance%.',
+  INSUFFICIENT_FUNDS_ERROR_MESSAGE:
+    'Insufficient funds. You only have %balance% in your %account%.',
   AMOUNT_ERROR_MESSAGE: 'Amount must be a number greater than 0.',
   NO_USER_MENTIONED_ERROR_MESSAGE: 'No user was mentioned.',
 };
