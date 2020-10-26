@@ -1,15 +1,10 @@
 // Constants.
-const { COMMANDS_CONSTANTS } = require('../constants');
+const { ADD_MONEY } = require('../constants/commands');
 
-// Helpers.
-const { TRANSACTION_HELPER } = require('../helpers');
-
-// Destruct constants.
-const { ADD_MONEY } = COMMANDS_CONSTANTS;
+// Command handler.
+const { ADD_REMOVE_HANDLER } = require('../commandHandlers');
 
 module.exports = {
   ...ADD_MONEY,
-  execute(message, args) {
-    TRANSACTION_HELPER.makeTransaction(message, args, 'add');
-  },
+  execute: (message, args) => new ADD_REMOVE_HANDLER(message, args, 'add'),
 };

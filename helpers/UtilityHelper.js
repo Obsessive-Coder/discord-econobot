@@ -42,6 +42,10 @@ module.exports = class UTILITY_HELPER {
     });
   }
 
+  static getArgsMention(args) {
+    return args.find(arg => USER_MENTION_REGEX.test(arg));
+  }
+
   static getLeaders(wallets, accountType, isTotalBoard, usersCache) {
     return wallets.sort((userA, userB) => {
       const totalA = WALLET_HELPER
@@ -125,5 +129,26 @@ module.exports = class UTILITY_HELPER {
       || transactionType === 'withdraw';
 
     return isRemoveWithdraw ? 'from' : 'to';
+  }
+
+  static getDescriptionAccount(type, args) {
+    let account;
+
+    switch (type) {
+      case 'transfer':
+        account = 'wallet';
+        break;
+      case 'withdraw':
+        account = 'wallet';
+        break;
+      case 'deposit':
+        account = 'bank';
+        break;
+      default:
+        account = UTILITY_HELPER.getArgsAccountType(args);
+        break;
+    }
+
+    return account;
   }
 };

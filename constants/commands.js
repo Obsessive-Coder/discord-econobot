@@ -20,7 +20,7 @@ const variables = {
     isArgsRequired: false,
     requiredArgsCount: 0,
     usage: '[wallet | bank] [member]',
-    aliases: ['get-money', 'get-funds'],
+    aliases: ['balance', 'get-money', 'get-funds'],
   },
   ADD_MONEY: {
     name: 'add-money',

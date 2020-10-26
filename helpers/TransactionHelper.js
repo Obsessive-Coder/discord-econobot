@@ -65,7 +65,7 @@ module.exports = class TransactionHelper {
 
     fromBalance = WALLETS.getBalance(authorId, fromAccount);
 
-    const messageEmbed = new MessageEmbed()
+    let messageEmbed = new MessageEmbed()
       .setColor('RED')
       .setTitle(TRANSACTION_ERROR_TITLE);
 
@@ -98,9 +98,6 @@ module.exports = class TransactionHelper {
     }
 
     if (!isError) {
-      const pastTenseTransaction = UTILITY_HELPER
-        .getPastTenseTransaction(transactionType);
-
       const {
         username: recipientName,
         id: recipientId,
@@ -129,49 +126,90 @@ module.exports = class TransactionHelper {
         WALLETS.add(receiverId, amount, toAccount);
       }
 
-      const walletBalance = WALLETS.getBalance(balanceUserId, 'wallet');
-      const bankBalance = WALLETS.getBalance(balanceUserId, 'bank');
-
-      const toFromText = UTILITY_HELPER.getToFromText(transactionType);
-
       const isWithdraw = transactionType === 'withdraw';
       let messageAccount = isWithdraw ? 'bank' : toAccount;
       messageAccount = isAddRemove ? fromAccount : messageAccount;
 
-      const transactionMessage = TRANSACTION_MESSAGE
-        .replace('%transaction%', pastTenseTransaction)
-        .replace('%symbol%', currencySymbol)
-        .replace('%amount%', amount)
-        .replace('%toFrom%', toFromText)
-        .replace('%name%', `${receiverName}'s`)
-        .replace('%type%', messageAccount);
+      const balanceUser = {
+        userId: balanceUserId,
+        username: balanceUsername,
+      };
 
-      const walletBalanceMessage = BALANCE_MESSAGE
-        .replace('%name%', balanceUsername)
-        .replace('%type%', 'wallet')
-        .replace('%symbol%', currencySymbol)
-        .replace('%balance%', walletBalance);
+      const messages = TransactionHelper.getMessages(
+        transactionType, amount, receiverName, balanceUser, messageAccount,
+      );
 
-      const bankBalanceMessage = BALANCE_MESSAGE
-        .replace('%name%', balanceUsername)
-        .replace('%type%', 'bank')
-        .replace('%symbol%', currencySymbol)
-        .replace('%balance%', bankBalance);
-
-      const capitalizedPastTransaction = UTILITY_HELPER
-        .getCapitalizedString(pastTenseTransaction);
-
-      const title = TRANSACTION_TITLE
-        .replace('%transaction%', capitalizedPastTransaction);
-
-      messageEmbed
-        .setColor('GREEN')
-        .setTitle(title)
-        .setDescription(
-          `${transactionMessage}\n${walletBalanceMessage}\n${bankBalanceMessage}`,
-        );
+      messageEmbed = TransactionHelper
+        .buildMessageEmbed(transactionType, messages);
     }
 
     message.channel.send(messageEmbed);
+  }
+
+  static getMessages(transactionType, amount, receiverName, balanceUser, account) {
+    const transactionMessage = TransactionHelper
+      .getTransactionMessage(
+        transactionType, amount, receiverName, account,
+      );
+
+    const { userId, username } = balanceUser;
+
+    const walletBalance = WALLETS.getBalance(userId, 'wallet');
+    const bankBalance = WALLETS.getBalance(userId, 'bank');
+
+    const walletBalanceMessage = TransactionHelper
+      .getBalanceMessage(username, 'wallet', walletBalance);
+
+    const bankBalanceMessage = TransactionHelper
+      .getBalanceMessage(username, 'bank', bankBalance);
+
+    return [transactionMessage, walletBalanceMessage, bankBalanceMessage];
+  }
+
+  static buildMessageEmbed(transactionType, messages) {
+    const messageTitle = TransactionHelper.getMessageTitle(transactionType);
+
+    return new MessageEmbed()
+      .setColor('GREEN')
+      .setTitle(messageTitle)
+      .setDescription(messages.join('\n'));
+  }
+
+  static getCapitalizePastTransaction(transactionType) {
+    const pastTenseTransaction = UTILITY_HELPER
+      .getPastTenseTransaction(transactionType);
+
+    return UTILITY_HELPER
+      .getCapitalizedString(pastTenseTransaction);
+  }
+
+  static getMessageTitle(transactionType) {
+    const capitalizedPastTransaction = TransactionHelper
+      .getCapitalizePastTransaction(transactionType);
+
+    return TRANSACTION_TITLE.replace('%transaction%', capitalizedPastTransaction);
+  }
+
+  static getTransactionMessage(transactionType, amount, username, account) {
+    const pastTenseTransaction = UTILITY_HELPER
+      .getPastTenseTransaction(transactionType);
+
+    const toFromText = UTILITY_HELPER.getToFromText(transactionType);
+
+    return TRANSACTION_MESSAGE
+      .replace('%transaction%', pastTenseTransaction)
+      .replace('%symbol%', currencySymbol)
+      .replace('%amount%', amount)
+      .replace('%toFrom%', toFromText)
+      .replace('%name%', `${username}'s`)
+      .replace('%type%', account);
+  }
+
+  static getBalanceMessage(username, account, balance) {
+    return BALANCE_MESSAGE
+      .replace('%name%', username)
+      .replace('%type%', account)
+      .replace('%symbol%', currencySymbol)
+      .replace('%balance%', balance);
   }
 };
