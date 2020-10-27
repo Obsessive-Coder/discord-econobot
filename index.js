@@ -18,7 +18,12 @@ const commands = require('./commands');
 const { WALLETS } = require('./helpers');
 
 // Destruct constants.
-const { READY_MESSAGE, COMMAND_ERROR_MESSAGE } = APPLICATION_CONSTANTS;
+const {
+  READY_MESSAGE,
+  COMMAND_ERROR_MESSAGE,
+  BOT_NAME,
+  AVATAR_URL,
+} = APPLICATION_CONSTANTS;
 const {
   UNKNOWN_COMMAND_ERROR_MESSAGE, DB_SYNC_ERROR_MESSAGE,
 } = MESSAGES_CONSTANTS;
@@ -31,6 +36,9 @@ client.commands = commands;
 client.once('ready', () => {
   db.sequelize.sync({})
     .then(async () => {
+      client.user.setUsername(BOT_NAME);
+      client.user.setAvatar(AVATAR_URL);
+
       const allUsers = await db.User.findAll();
       allUsers.forEach(user => WALLETS.set(user.id, user));
 
@@ -40,14 +48,30 @@ client.once('ready', () => {
     });
 });
 
+client.on('guildMemberAdd', async newMember => {
+  const welcomeChannel = newMember.guild.channels.cache.find(channel => channel.name === 'the channel name here, make sure the ');
+
+  welcomeChannel.send('Input your message here, if you want an embed then do a "let msgEmbed = new Discord.messageEmbed  /  and input the title and all the embed stuff, customize the message as much as you want!"');
+
+
+  // Optional Part (you can modify those extra things if you'd like!) :D
+  let msgEmbed = new Discord.MessageEmbed()
+  .setTitle (`This is a title for a test`)
+  // welcomeChannel.send(msgEmbed) | (that's commented so you know to use it only if you want an embed and also don't delete the other "welcomeChannel.send" just change it in there and say "welcomeChannel.send(msgEmbed)" and define the msgEmbed variable as a let and define it above the "welcomeChannel.send" so the bot will check and see that it's defined so errors won't happen!
+  if (newMember.bot) return; // checks if it's a bot that joined so the channel won't be spammed with "*Discord Bot* has joined the server" and stuff like that, so check that.
+  const newbieRole = newMember.roles.cache.find(role => role.name === 'Role Name here') // that was to define the role to give newbies (you can name the variable however you want that doesn't matter!)
+  newMember.roles.add(newbieRole.id) // this will add the role to that member!
+  // All the things that are under the "Optional Part" are 100 % Optional! No Requirement to use those, just use it if you want and they won't affect the welcome message at all!
+})
+
 client.on('message', message => {
   const { author, channel, content } = message;
   if (!content.startsWith(prefix) || author.bot) return;
 
   // Delete the command message.
-  // if (channel.type !== 'dm') {
-  //   channel.messages.delete(message);
-  // }
+  if (channel.type !== 'dm') {
+    channel.messages.delete(message);
+  }
 
   // Get the command and its arguments.
   const args = content.slice(prefix.length).trim().split(/ +/);

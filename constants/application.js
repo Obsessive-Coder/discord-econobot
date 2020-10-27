@@ -1,4 +1,6 @@
 const variables = {
+  BOT_NAME: 'Econobot',
+  AVATAR_URL: '../botImage.jpg',
   READY_MESSAGE: 'Economy bot is ready.',
   COMMAND_ERROR_MESSAGE: 'There was an error trying to execute the command!',
 };
