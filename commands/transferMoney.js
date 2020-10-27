@@ -1,3 +1,6 @@
+// Config variables.
+const { maxWalletAmount, maxBankAmount } = require('../config/economy.json');
+
 // Constants.
 const { COMMANDS_CONSTANTS } = require('../constants');
 
@@ -17,7 +20,8 @@ module.exports = {
     const fromAccount = UTILITY_HELPER.getArgsAccountType(args);
     const balance = WALLETS.getBalance(authorId, fromAccount);
     const isAll = args.includes('all');
-    const amount = isAll ? balance : UTILITY_HELPER.getArgsAmount(args);
+    const argsAmount = parseInt(UTILITY_HELPER.getArgsAmount(args), 10);
+    let amount = isAll ? balance : argsAmount;
 
     const authorBalance = WALLETS.getBalance(authorId, fromAccount);
 
@@ -36,6 +40,14 @@ module.exports = {
     if (!transaction.isError) {
       const { id: receiverId, username: receiverName } = MAIN_HELPER
         .getUserFromMention(userMention, message.client);
+
+      const toBalance = WALLETS.getBalance(receiverId, 'wallet');
+      const nextBalance = toBalance + amount;
+
+      if (maxWalletAmount > 0 && nextBalance > maxWalletAmount) {
+        amount = maxWalletAmount - toBalance;
+        transaction.amount = amount;
+      }
 
       WALLETS.add(authorId, -amount, fromAccount);
       WALLETS.add(receiverId, amount, 'wallet');
