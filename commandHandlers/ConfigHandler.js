@@ -28,8 +28,8 @@ module.exports = class ConfigHandler {
   }
 
   setConfig() {
-    const { member, guild } = this.message;
-    this.validateRole(member, guild, 'Leadership');
+    const { roles } = this.message.member;
+    this.validateRole(roles, 'Leadership');
 
     let valuePrepend = '';
 
@@ -72,15 +72,8 @@ module.exports = class ConfigHandler {
     return this.message.channel.send(this.messageEmbed);
   }
 
-  validateRole(member, guild, roleName) {
-    const leaderRole = guild.roles.cache
-      .find(role => role.name === roleName);
-
-    const roleId = leaderRole ? leaderRole.id : undefined;
-    // eslint-disable-next-line no-underscore-dangle
-    const userRoleIds = member._roles;
-
-    const isUserRole = userRoleIds.includes(roleId);
+  validateRole(roles, roleName) {
+    const isUserRole = roles.cache.some(role => role.name === roleName);
 
     if (!isUserRole) {
       const description = INVALID_ROLE_MESSAGE.replace('%role%', roleName);

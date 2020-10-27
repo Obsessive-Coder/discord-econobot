@@ -18,8 +18,8 @@ module.exports = class AddRemoveHelper {
   }
 
   makeTransaction() {
-    const { member, guild } = this.message;
-    this.transaction.validateRole(member, guild, 'Leadership');
+    const { roles } = this.message.member;
+    this.transaction.validateRole(roles, 'Leadership');
 
     if (!this.transaction.isError) {
       this.transaction.validateAmount();
