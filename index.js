@@ -29,7 +29,7 @@ const {
 const {
   UNKNOWN_COMMAND_ERROR_MESSAGE, DB_SYNC_ERROR_MESSAGE,
   WELCOME_TITLE, WELCOME_MESSAGE, THANK_YOU_TITLE,
-  THANK_YOU_MESSAGE
+  THANK_YOU_MESSAGE,
 } = MESSAGES_CONSTANTS;
 
 // Create the client.
@@ -122,12 +122,31 @@ client.on('messageReactionAdd', (reaction, user) => {
 
   // If it's the rules message
   if (id === messageId) {
-    const memberRole = guild.roles.cache.find(role => role.name === 'Member');
+    const { id: userId } = user;
+    const storedUser = WALLETS.get(userId);
 
-    guild.members.fetch(user.id).then(member => {
+    if (storedUser && storedUser.is_rules_accepted) {
+      return;
+    }
+
+    guild.members.fetch(userId).then(async member => {
+      // Add the Member role to the user.
+      const memberRole = guild.roles.cache.find(role => role.name === 'Member');
       member.roles.add(memberRole);
-      // TODO: Create user in db.
-      // TODO: Give user money.
+
+      // Add the starting funds to the user.
+      await WALLETS.add(userId, startAmount, 'wallet');
+
+      const updatedUser = {
+        ...storedUser,
+        is_rules_accepted: true,
+      };
+
+      WALLETS.set(user.id, updatedUser);
+
+      db.User.update(updatedUser, {
+        where: { id: userId },
+      });
 
       // Notify user.
       const messageEmbed = new MessageEmbed()
