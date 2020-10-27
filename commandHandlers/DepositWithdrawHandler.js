@@ -1,3 +1,6 @@
+// Config variables.
+const { maxWalletAmount, maxBankAmount } = require('../config/economy.json');
+
 // Helpers.
 const {
   TRANSACTION_HELPER, UTILITY_HELPER, WALLETS,
@@ -11,7 +14,8 @@ module.exports = class AddRemoveHelper {
     this.balance = WALLETS.getBalance(message.author.id, this.fromAccount);
 
     const isAll = args.includes('all');
-    this.amount = isAll ? this.balance : UTILITY_HELPER.getArgsAmount(args);
+    const argsAmount = parseInt(UTILITY_HELPER.getArgsAmount(args), 10);
+    this.amount = isAll ? this.balance : argsAmount;
 
     this.transaction = new TRANSACTION_HELPER(this.amount, type);
 
@@ -30,6 +34,15 @@ module.exports = class AddRemoveHelper {
     }
 
     if (!this.transaction.isError) {
+      const toBalance = WALLETS.getBalance(id, this.toAccount);
+      const nextBalance = toBalance + this.amount;
+      const maxAmount = this.toAccount === 'bank' ? maxBankAmount : maxWalletAmount;
+
+      if (maxAmount > 0 && nextBalance > maxAmount) {
+        this.amount = maxAmount - toBalance;
+        this.transaction.amount = this.amount;
+      }
+
       WALLETS.add(id, -this.amount, this.fromAccount);
       WALLETS.add(id, this.amount, this.toAccount);
       this.transaction.buildMessage(id, username, 'bank');

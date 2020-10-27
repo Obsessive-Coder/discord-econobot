@@ -94,7 +94,7 @@ module.exports = class TransactionHelper {
     return TRANSACTION_MESSAGE
       .replace('%transaction%', pastTenseTransaction)
       .replace('%symbol%', currencySymbol)
-      .replace('%amount%', this.amount)
+      .replace('%amount%', Math.abs(this.amount))
       .replace('%toFrom%', toFromText)
       .replace('%name%', `${username}'s`)
       .replace('%type%', account);
