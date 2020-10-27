@@ -38,6 +38,8 @@ const variables = {
   CONFIG_ERROR_TITLE: 'Config Error',
   WELCOME_TITLE: 'Welcome to %server%',
   WELCOME_MESSAGE: 'Welcome to the server, %user%. Please go to the %channel% channel and read the rules. Afterwards give the rules a reaction to let us know that you read them. Once you do this you will be given access to the rest of the channels and a $200 starting bonus!',
+  THANK_YOU_TITLE: 'Thank You',
+  THANK_YOU_MESSAGE: 'Thank you for reading the rules.\nYou now have the `Member` role and can participate in other channels.\nYou received a %symbol%%amount% bonus.',
 };
 
 // Export each individually.

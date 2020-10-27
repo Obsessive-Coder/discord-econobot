@@ -5,6 +5,7 @@ const db = require('./models');
 // Configuration.
 const { prefix, token } = require('./config/app');
 const RULES_MESSAGE_ID = require('./config/rulesMessageId');
+const { currencySymbol, startAmount } = require('./config/economy.json');
 
 // Constants.
 const {
@@ -27,7 +28,8 @@ const {
 } = APPLICATION_CONSTANTS;
 const {
   UNKNOWN_COMMAND_ERROR_MESSAGE, DB_SYNC_ERROR_MESSAGE,
-  WELCOME_TITLE, WELCOME_MESSAGE,
+  WELCOME_TITLE, WELCOME_MESSAGE, THANK_YOU_TITLE,
+  THANK_YOU_MESSAGE
 } = MESSAGES_CONSTANTS;
 
 // Create the client.
@@ -124,13 +126,18 @@ client.on('messageReactionAdd', (reaction, user) => {
 
     guild.members.fetch(user.id).then(member => {
       member.roles.add(memberRole);
-      // Create user in db.
-      // Give user money.
+      // TODO: Create user in db.
+      // TODO: Give user money.
+
       // Notify user.
       const messageEmbed = new MessageEmbed()
         .setColor('BLUE')
-        .setTitle('Thank you!')
-        .setDescription('Thank you for reading the rules.\nYou now have the `Member` role and can participate in other channels.\nYou received a $200 bonus.');
+        .setTitle(THANK_YOU_TITLE)
+        .setDescription(
+          THANK_YOU_MESSAGE
+            .replace('%symbol%', currencySymbol)
+            .replace('%amount%', startAmount),
+        );
 
       user.send(messageEmbed);
     });
