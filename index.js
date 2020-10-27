@@ -144,15 +144,9 @@ client.on('messageReactionAdd', (reaction, user) => {
 
       WALLETS.set(user.id, updatedUser);
 
-      await db.User.update(updatedUser, {
+      db.User.update(updatedUser, {
         where: { id: userId },
       });
-
-      db.User.findOne({
-        where: { id: userId },
-      })
-        .then(u => console.log(u))
-        .catch(error => console.log(error));
 
       // Notify user.
       const messageEmbed = new MessageEmbed()
