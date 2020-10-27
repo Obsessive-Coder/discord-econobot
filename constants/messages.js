@@ -36,6 +36,8 @@ const variables = {
   INVALID_ROLE_MESSAGE:
     'You do not have the correct role to make this command.\nSpeak to an admin to get access to the `%role%` role.',
   CONFIG_ERROR_TITLE: 'Config Error',
+  WELCOME_TITLE: 'Welcome to %server%',
+  WELCOME_MESSAGE: 'Welcome to the server, %user%. Please go to the %channel% channel and read the rules. Afterwards give the rules a reaction to let us know that you read them. Once you do this you will be given access to the rest of the channels and a $200 starting bonus!',
 };
 
 // Export each individually.
