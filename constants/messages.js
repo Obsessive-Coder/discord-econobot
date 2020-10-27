@@ -3,6 +3,8 @@ const variables = {
   START_AMOUNT_MESSAGE: 'Start amount set to:',
   MAX_WALLET_MESSAGE: 'Max wallet amount set to:',
   MAX_BANK_MESSAGE: 'Max bank amount set to:',
+  CONFIG_SET_TITLE: 'Set %type%',
+  CONFIG_SET_MESSAGE: '%type% set to:',
   NAN_ERROR_MESSAGE: 'Amount must be a number',
   INVALID_ARGUMENT_ERROR_MESSAGE: 'Invalid or missing argument(s)',
   USAGE_ERROR_MESSAGE: 'The proper usage would be:',
@@ -33,6 +35,7 @@ const variables = {
   NO_USER_MENTIONED_ERROR_MESSAGE: 'No user was mentioned.',
   INVALID_ROLE_MESSAGE:
     'You do not have the correct role to make this command.\nSpeak to an admin to get access to the `%role%` role.',
+  CONFIG_ERROR_TITLE: 'Config Error',
 };
 
 // Export each individually.

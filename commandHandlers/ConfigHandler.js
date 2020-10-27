@@ -5,66 +5,74 @@ const { MessageEmbed } = require('discord.js');
 // Constants.
 const { CURRENCY_SYMBOL_FIELD } = require('../constants/configCommands');
 const {
-  NAN_ERROR_MESSAGE, INVALID_ARGUMENT_ERROR_MESSAGE,
-  INVALID_ROLE_MESSAGE,
+  INVALID_ROLE_MESSAGE, CONFIG_ERROR_TITLE, AMOUNT_ERROR_MESSAGE,
+  CONFIG_SET_TITLE, CONFIG_SET_MESSAGE,
 } = require('../constants/messages');
-const { FLOAT_REGEX } = require('../constants/regex');
 
 // Config file.
+const { ECONOMY_CONFIG } = require('../config');
 
-const {
-  ECONOMY_CONFIG,
-  DEFAULT_ECONOMY_CONFIG: { currencySymbol },
-} = require('../config');
+module.exports = class ConfigHandler {
+  constructor(message, value, configField) {
+    this.error = false;
+    this.message = message;
+    this.configField = configField;
+    this.value = value;
 
-module.exports = class CONFIG_HANDLER {
-  static saveConfig(message, configField, value, successMessage) {
-    const isValidRole = CONFIG_HANDLER.validateRole(message, 'Leadership');
+    // The message sent back to the user.
+    this.messageEmbed = new MessageEmbed()
+      .setColor('RED')
+      .setTitle(CONFIG_ERROR_TITLE);
 
-    if (!isValidRole) return isValidRole;
-
-    let parsedValue = value;
-    let valuePrepend = '';
-    if (configField !== CURRENCY_SYMBOL_FIELD) {
-      const isNumber = FLOAT_REGEX.test(value);
-      parsedValue = parseInt(value, 10);
-
-      if (!isNumber || Number.isNaN(parsedValue)) {
-        return message.reply(NAN_ERROR_MESSAGE);
-      }
-
-      valuePrepend = ECONOMY_CONFIG.currencySymbol || currencySymbol;
-    }
-
-    if (!value) {
-      return message.reply(INVALID_ARGUMENT_ERROR_MESSAGE);
-    }
-
-    // Set the value.
-    ECONOMY_CONFIG[configField] = parsedValue;
-
-    // Convert to JSON.
-    const fileData = JSON.stringify(ECONOMY_CONFIG, null, 2);
-
-    return writeFile(join(__dirname, '../config/economy.json'), fileData, error => {
-      if (error) {
-        return message.reply(error.message);
-      }
-
-      const { author } = message;
-      const { username } = author;
-
-      const embed = new MessageEmbed()
-        .setColor('GREEN')
-        .setAuthor(username, author.displayAvatarURL())
-        .setDescription(`${successMessage} ${valuePrepend}${parsedValue}`);
-
-      return message.channel.send(embed);
-    });
+    this.setConfig();
   }
 
-  static validateRole(message, roleName) {
-    const { channel, member, guild } = message;
+  setConfig() {
+    const { member, guild } = this.message;
+    this.validateRole(member, guild, 'Leadership');
+
+    let valuePrepend = '';
+
+    if (!this.isError && this.configField !== CURRENCY_SYMBOL_FIELD) {
+      this.value = parseInt(this.value, 10);
+      this.validateNumber();
+
+      valuePrepend = ECONOMY_CONFIG.currencySymbol;
+    }
+
+    if (!this.isError) {
+      // Set the value.
+      ECONOMY_CONFIG[this.configField] = this.value;
+
+      // Convert to JSON.
+      const fileData = JSON.stringify(ECONOMY_CONFIG, null, 2);
+
+      return writeFile(join(__dirname, '../config/economy.json'), fileData, error => {
+        if (error) {
+          this.messageEmbed.setDescription(error);
+          this.isError = true;
+        }
+
+        if (!this.isError) {
+          const title = CONFIG_SET_TITLE.replace('%type%', this.configField);
+
+          const successMessage = CONFIG_SET_MESSAGE
+            .replace('%type%', this.configField);
+
+          this.messageEmbed
+            .setColor('GREEN')
+            .setTitle(title)
+            .setDescription(`${successMessage} ${valuePrepend}${this.value}`);
+        }
+
+        return this.message.channel.send(this.messageEmbed);
+      });
+    }
+
+    return this.message.channel.send(this.messageEmbed);
+  }
+
+  validateRole(member, guild, roleName) {
     const leaderRole = guild.roles.cache
       .find(role => role.name === roleName);
 
@@ -76,16 +84,15 @@ module.exports = class CONFIG_HANDLER {
 
     if (!isUserRole) {
       const description = INVALID_ROLE_MESSAGE.replace('%role%', roleName);
-      const embed = new MessageEmbed()
-        .setColor('RED')
-        .setTitle('Error')
-        .setDescription(description);
-
-      channel.send(embed);
-
-      return false;
+      this.messageEmbed.setDescription(description);
+      this.isError = true;
     }
+  }
 
-    return true;
+  validateNumber() {
+    if (!this.validateNumber || Number.isNaN(this.value) || this.value < 0) {
+      this.messageEmbed.setDescription(AMOUNT_ERROR_MESSAGE);
+      this.isError = true;
+    }
   }
 };
