@@ -2,6 +2,9 @@
 
 Econobot is an economy bot for discord. Users have a wallet and bank balance. Money can be added, removed, deposited, withdrew, transferred and more.
 
+## Where to get it
+https://discord.com/oauth2/authorize?client_id=769159587386884118&scope=bot
+
 ## How To Use
 ### **Legend**
 `*` - Command Prefix
