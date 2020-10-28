@@ -142,7 +142,8 @@ client.on('messageReactionAdd', (reaction, user) => {
 
       const updatedUser = {
         id: userId,
-        wallet_balance,
+        // eslint-disable-next-line camelcase
+        wallet_balance: wallet_balance + startAmount,
         bank_balance,
         is_rules_accepted: true,
       };
