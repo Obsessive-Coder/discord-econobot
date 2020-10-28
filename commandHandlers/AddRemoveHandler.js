@@ -4,7 +4,6 @@ const { maxWalletAmount, maxBankAmount } = require('../config/economy.json');
 // Helpers.
 const {
   TRANSACTION_HELPER, MAIN_HELPER, UTILITY_HELPER, WALLETS,
-  WALLET_HELPER,
 } = require('../helpers');
 
 module.exports = class AddRemoveHelper {

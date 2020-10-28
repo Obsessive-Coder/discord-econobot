@@ -1,5 +1,5 @@
 // Config variables.
-const { maxWalletAmount, maxBankAmount } = require('../config/economy.json');
+const { maxWalletAmount } = require('../config/economy.json');
 
 // Constants.
 const { COMMANDS_CONSTANTS } = require('../constants');
