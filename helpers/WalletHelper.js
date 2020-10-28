@@ -29,6 +29,7 @@ module.exports = class WalletHelper {
         const user = wallets.get(id);
         const amountNumber = Number(amount);
         const accountField = WalletHelper.getAccountField(accountType);
+        const otherField = WalletHelper.getOtherAccountField(accountType);
 
         if (user) {
           user[accountField] += amountNumber;
@@ -38,6 +39,7 @@ module.exports = class WalletHelper {
         const newUser = await User.create({
           id,
           [accountField]: amountNumber,
+          [otherField]: 0,
           is_rules_accepted: isRulesAccepted,
         });
 
