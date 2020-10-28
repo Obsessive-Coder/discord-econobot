@@ -134,9 +134,6 @@ client.on('messageReactionAdd', (reaction, user) => {
       const memberRole = guild.roles.cache.find(role => role.name === 'Member');
       member.roles.add(memberRole);
 
-      // Add the starting funds to the user.
-      await WALLETS.add(userId, startAmount, 'wallet', true);
-
       const { wallet_balance = 0, bank_balance = 0 } = storedUser;
 
       const updatedUser = {
@@ -147,6 +144,8 @@ client.on('messageReactionAdd', (reaction, user) => {
       };
 
       WALLETS.set(user.id, updatedUser);
+      // Add the starting funds to the user.
+      await WALLETS.add(userId, startAmount, 'wallet', true);
 
       db.User.update(updatedUser, {
         where: { id: userId },
