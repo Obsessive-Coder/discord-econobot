@@ -123,9 +123,9 @@ client.on('messageReactionAdd', (reaction, user) => {
   // If it's the rules message
   if (id === messageId) {
     const { id: userId } = user;
-    const storedUser = WALLETS.get(userId);
+    const storedUser = WALLETS.get(userId) || {};
 
-    if (storedUser && storedUser.is_rules_accepted) {
+    if (storedUser.is_rules_accepted) {
       return;
     }
 
