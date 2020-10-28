@@ -20,6 +20,11 @@ module.exports = class UTILITY_HELPER {
       .toUpperCase();
   }
 
+  static getSeparatedString(value) {
+    return value
+      .replace(/[A-Z]/g, char => ` ${char}`);
+  }
+
   static getArgsAccountType(commandArguments) {
     // Get the first argument that is not a mention or number.
     const accountType = commandArguments.find(arg => {

@@ -9,6 +9,9 @@ const {
   CONFIG_SET_TITLE, CONFIG_SET_MESSAGE,
 } = require('../constants/messages');
 
+// Helpers.
+const { UTILITY_HELPER } = require('../helpers');
+
 // Config file.
 const { ECONOMY_CONFIG } = require('../config');
 
@@ -54,10 +57,16 @@ module.exports = class ConfigHandler {
         }
 
         if (!this.isError) {
-          const title = CONFIG_SET_TITLE.replace('%type%', this.configField);
+          let configFieldText = UTILITY_HELPER
+            .getSeparatedString(this.configField);
+
+          configFieldText = UTILITY_HELPER
+            .getCapitalizedString(configFieldText);
+
+          const title = CONFIG_SET_TITLE.replace('%type%', configFieldText);
 
           const successMessage = CONFIG_SET_MESSAGE
-            .replace('%type%', this.configField);
+            .replace('%type%', configFieldText);
 
           this.messageEmbed
             .setColor('GREEN')
