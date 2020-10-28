@@ -135,7 +135,7 @@ client.on('messageReactionAdd', (reaction, user) => {
       member.roles.add(memberRole);
 
       // Add the starting funds to the user.
-      await WALLETS.add(userId, startAmount, 'wallet');
+      await WALLETS.add(userId, startAmount, 'wallet', true);
 
       const { wallet_balance = 0, bank_balance = 0 } = storedUser;
 

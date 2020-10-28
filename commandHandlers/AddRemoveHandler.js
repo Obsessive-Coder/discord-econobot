@@ -21,7 +21,7 @@ module.exports = class AddRemoveHelper {
     this.makeTransaction();
   }
 
-  makeTransaction() {
+  async makeTransaction() {
     const { roles } = this.message.member;
     this.transaction.validateRole(roles, 'Leadership');
 
@@ -53,7 +53,7 @@ module.exports = class AddRemoveHelper {
 
       this.transaction.amount = this.amount;
 
-      WALLETS.add(id, this.amount, this.account);
+      await WALLETS.add(id, this.amount, this.account);
       this.transaction.buildMessage(id, username, this.account);
     }
 

@@ -25,7 +25,7 @@ module.exports = class WalletHelper {
 
   static setupAdd(wallets) {
     Reflect.defineProperty(wallets, 'add', {
-      value: async (id, amount, accountType) => {
+      value: async (id, amount, accountType, isRulesAccepted = false) => {
         const user = wallets.get(id);
         const amountNumber = Number(amount);
         const accountField = WalletHelper.getAccountField(accountType);
@@ -38,9 +38,10 @@ module.exports = class WalletHelper {
         const newUser = await User.create({
           id,
           [accountField]: amountNumber,
+          is_rules_accepted: isRulesAccepted,
         });
 
-        wallets.set(id, newUser);
+        await wallets.set(id, newUser);
         return newUser;
       },
     });
