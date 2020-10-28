@@ -136,16 +136,16 @@ client.on('messageReactionAdd', (reaction, user) => {
 
       const { wallet_balance = 0, bank_balance = 0 } = storedUser;
 
+      // WALLETS.set(user.id, updatedUser);
+      // Add the starting funds to the user.
+      await WALLETS.add(userId, startAmount, 'wallet', true);
+
       const updatedUser = {
         id: userId,
         wallet_balance,
         bank_balance,
         is_rules_accepted: true,
       };
-
-      WALLETS.set(user.id, updatedUser);
-      // Add the starting funds to the user.
-      await WALLETS.add(userId, startAmount, 'wallet', true);
 
       db.User.update(updatedUser, {
         where: { id: userId },

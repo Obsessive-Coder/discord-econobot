@@ -31,7 +31,6 @@ module.exports = class WalletHelper {
         const accountField = WalletHelper.getAccountField(accountType);
 
         if (user) {
-          console.log(user)
           user[accountField] += amountNumber;
           return user.save();
         }
