@@ -32,6 +32,10 @@ module.exports = class WalletHelper {
         const otherField = WalletHelper.getOtherAccountField(accountType);
 
         if (user) {
+          if (isRulesAccepted) {
+            user.is_rules_accepted = isRulesAccepted;
+          }
+
           user[accountField] += amountNumber;
           return user.save();
         }

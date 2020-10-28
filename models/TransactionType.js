@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
 
   TransactionType.init({
     id: {
-      type: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
       allowNull: false,
       primaryKey: true,
       validate: {
