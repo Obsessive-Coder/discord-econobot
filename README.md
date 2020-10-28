@@ -20,14 +20,11 @@ Example - `*deposit-money 750 bank`
 **add-money**
 `*add-money [wallet | bank] <member> <amount>`
 
-
 **deposit-money**
 `*deposit-money <amount | all>`
 
-
 **get-balance**
 `*get-balance [wallet | bank] [member]`
-
 
 **help**
 `*help [command name]`
