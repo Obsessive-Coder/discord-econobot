@@ -137,8 +137,12 @@ client.on('messageReactionAdd', (reaction, user) => {
       // Add the starting funds to the user.
       await WALLETS.add(userId, startAmount, 'wallet');
 
+      const { wallet_balance = 0, bank_balance = 0 } = storedUser;
+
       const updatedUser = {
-        ...storedUser,
+        id: userId,
+        wallet_balance,
+        bank_balance,
         is_rules_accepted: true,
       };
 
