@@ -185,3 +185,18 @@
 [[34mINFO[39m] - Economy bot is ready.
 [[34mINFO[39m] - Economy bot is ready.
 [[34mINFO[39m] - Economy bot is ready.
+[[31mERROR[39m] - Something went wrong with syncing the database. - TypeError: Cannot read property 'channels' of undefined
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[31mERROR[39m] - Something went wrong with syncing the database. - TypeError: Cannot read property 'messages' of undefined
+[[31mERROR[39m] - Something went wrong with syncing the database. - TypeError: Cannot read property 'messages' of undefined
+[[31mERROR[39m] - Something went wrong with syncing the database. - TypeError: rulesChannel.messages.cache.fetch is not a function
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
+[[34mINFO[39m] - Economy bot is ready.
