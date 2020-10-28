@@ -14,7 +14,7 @@ const { TRANSFER_MONEY } = COMMANDS_CONSTANTS;
 
 module.exports = {
   ...TRANSFER_MONEY,
-  execute(message, args) {
+  async execute(message, args) {
     const { id: authorId } = message.author;
     const userMention = UTILITY_HELPER.getArgsMention(args);
     const fromAccount = UTILITY_HELPER.getArgsAccountType(args);
@@ -49,8 +49,8 @@ module.exports = {
         transaction.amount = amount;
       }
 
-      WALLETS.add(authorId, -amount, fromAccount);
-      WALLETS.add(receiverId, amount, 'wallet');
+      await WALLETS.add(authorId, -amount, fromAccount);
+      await WALLETS.add(receiverId, amount, 'wallet');
 
       transaction.buildMessage(receiverId, receiverName, 'wallet');
     }
