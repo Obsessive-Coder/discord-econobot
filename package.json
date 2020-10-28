@@ -1,6 +1,6 @@
 {
   "name": "ds_economy",
-  "version": "0.48.15",
+  "version": "0.48.17",
   "description": "A discord economy bot",
   "main": "index.js",
   "author": "Jared Huffstutler",

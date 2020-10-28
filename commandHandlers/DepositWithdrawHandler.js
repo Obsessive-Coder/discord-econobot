@@ -22,7 +22,7 @@ module.exports = class AddRemoveHelper {
     this.makeTransaction();
   }
 
-  makeTransaction() {
+  async makeTransaction() {
     this.transaction.validateAmount();
 
     const {
@@ -43,8 +43,8 @@ module.exports = class AddRemoveHelper {
         this.transaction.amount = this.amount;
       }
 
-      WALLETS.add(id, -this.amount, this.fromAccount);
-      WALLETS.add(id, this.amount, this.toAccount);
+      await WALLETS.add(id, -this.amount, this.fromAccount);
+      await WALLETS.add(id, this.amount, this.toAccount);
       this.transaction.buildMessage(id, username, 'bank');
     }
 
