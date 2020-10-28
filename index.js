@@ -134,23 +134,23 @@ client.on('messageReactionAdd', (reaction, user) => {
       const memberRole = guild.roles.cache.find(role => role.name === 'Member');
       member.roles.add(memberRole);
 
-      const { wallet_balance = 0, bank_balance = 0 } = storedUser;
+      // const { wallet_balance = 0, bank_balance = 0 } = storedUser;
 
       // WALLETS.set(user.id, updatedUser);
       // Add the starting funds to the user.
       await WALLETS.add(userId, startAmount, 'wallet', true);
 
-      const updatedUser = {
-        id: userId,
-        // eslint-disable-next-line camelcase
-        wallet_balance: wallet_balance + startAmount,
-        bank_balance,
-        is_rules_accepted: true,
-      };
+      // const updatedUser = {
+      //   id: userId,
+      //   // eslint-disable-next-line camelcase
+      //   wallet_balance: wallet_balance + startAmount,
+      //   bank_balance,
+      //   is_rules_accepted: true,
+      // };
 
-      db.User.update(updatedUser, {
-        where: { id: userId },
-      });
+      // db.User.update(updatedUser, {
+      //   where: { id: userId },
+      // });
 
       // Notify user.
       const messageEmbed = new MessageEmbed()
